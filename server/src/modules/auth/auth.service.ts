@@ -5,15 +5,20 @@ import sendEmail from "@/shared/utils/sendEmail";
 import passwordResetTemplate from "@/shared/templates/passwordReset";
 import { tokenUtils, passwordUtils } from "@/shared/utils/authUtils";
 import { AuthResponse, RegisterUserParams, SignInParams } from "./auth.types";
-import { ROLE } from "@prisma/client";
+import { ROLE, VENDOR_STATUS } from "@prisma/client";
 import logger from "@/infra/winston/logger";
 import jwt from "jsonwebtoken";
 import { AuthRepository } from "./auth.repository";
+import { VendorRepository } from "../vendor/vendor.repository";
 import BadRequestError from "@/shared/errors/BadRequestError";
 import NotFoundError from "@/shared/errors/NotFoundError";
+import slugify from "@/shared/utils/slugify";
 
 export class AuthService {
-  constructor(private authRepository: AuthRepository) {}
+  constructor(
+    private authRepository: AuthRepository,
+    private vendorRepository: VendorRepository
+  ) {}
 
   async registerUser({
     name,
@@ -50,7 +55,7 @@ export class AuthService {
     await emailQueue
       .add("sendVerificationEmail", {
         to: email,
-        subject: "Verify Your Email - EgWinch",
+        subject: "Verify Your Email - Multi vendor ecommerce",
         text: `Your verification code is: ${emailVerificationToken}`,
         html: `<p>Your verification code is: <strong>${emailVerificationToken}</strong></p>`,
       })
@@ -208,7 +213,8 @@ export class AuthService {
       throw new BadRequestError("Invalid or expired reset token");
     }
 
-    await this.authRepository.updateUserPassword(user.id, newPassword);
+    const hashedPassword = await passwordUtils.hashPassword(newPassword);
+    await this.authRepository.updateUserPassword(user.id, hashedPassword);
 
     return { message: "Password reset successful. You can now log in." };
   }
@@ -241,7 +247,6 @@ export class AuthService {
     }
 
     const user = await this.authRepository.findUserById(decoded.id);
-    console.log("refreshed user: ", user);
 
     if (!user) {
       throw new NotFoundError("User");
@@ -261,5 +266,52 @@ export class AuthService {
     }
 
     return { user, newAccessToken, newRefreshToken };
+  }
+
+  async applyForVendor(
+    userId: string,
+    vendorData: {
+      storeName: string;
+      description?: string;
+      logo?: string;
+      contact?: string;
+    }
+  ) {
+    const existingVendor = await this.vendorRepository.findByUserId(userId);
+    if (existingVendor) {
+      throw new BadRequestError("User is already associated with a vendor");
+    }
+
+    const existingStore = await this.vendorRepository.findByStoreName(
+      vendorData.storeName
+    );
+    if (existingStore) {
+      throw new BadRequestError("Store name is already taken");
+    }
+
+    const slug = slugify(vendorData.storeName);
+    const existingSlug = await this.vendorRepository.findBySlug(slug);
+    if (existingSlug) {
+      throw new BadRequestError("Generated slug is already in use");
+    }
+
+    const user = await this.authRepository.findUserById(userId);
+    if (!user) {
+      throw new NotFoundError("User");
+    }
+
+    const vendor = await this.vendorRepository.create({
+      userId,
+      storeName: vendorData.storeName,
+      slug,
+      description: vendorData.description,
+      logo: vendorData.logo,
+      contact: vendorData.contact,
+      status: VENDOR_STATUS.PENDING,
+    });
+
+    await this.authRepository.updateUserRole(userId, ROLE.VENDOR);
+
+    return vendor;
   }
 }

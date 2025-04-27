@@ -21,7 +21,6 @@ export class AuthController {
   register = asyncHandler(
     async (req: Request, res: Response): Promise<void> => {
       const start = Date.now();
-      const end = Date.now();
       const { name, email, password, role } = req.body;
       const { user, accessToken, refreshToken } =
         await this.authService.registerUser({
@@ -53,7 +52,7 @@ export class AuthController {
       this.logsService.info("Register", {
         userId,
         sessionId: req.session.id,
-        timePeriod: end - start,
+        timePeriod: Date.now() - start,
       });
     }
   );
@@ -66,12 +65,10 @@ export class AuthController {
       sendResponse(res, 200, { message: result.message });
 
       const start = Date.now();
-      const end = Date.now();
-
       this.logsService.info("Send Verification Email", {
         userId,
         sessionId: req.session.id,
-        timePeriod: end - start,
+        timePeriod: Date.now() - start,
       });
     }
   );
@@ -85,12 +82,10 @@ export class AuthController {
       sendResponse(res, 200, { message: result.message });
 
       const start = Date.now();
-      const end = Date.now();
-
       this.logsService.info("Verify Email", {
         userId,
         sessionId: req.session.id,
-        timePeriod: end - start,
+        timePeriod: Date.now() - start,
       });
     }
   );
@@ -122,12 +117,10 @@ export class AuthController {
     });
 
     const start = Date.now();
-    const end = Date.now();
-
     this.logsService.info("Sign in", {
       userId,
       sessionId: req.session.id,
-      timePeriod: end - start,
+      timePeriod: Date.now() - start,
     });
   });
 
@@ -163,12 +156,10 @@ export class AuthController {
 
     sendResponse(res, 200, { message: "Logged out successfully" });
     const start = Date.now();
-    const end = Date.now();
-
     this.logsService.info("Sign out", {
       userId,
       sessionId: req.session.id,
-      timePeriod: end - start,
+      timePeriod: Date.now() - start,
     });
   });
 
@@ -180,12 +171,10 @@ export class AuthController {
 
       sendResponse(res, 200, { message: response.message });
       const start = Date.now();
-      const end = Date.now();
-
       this.logsService.info("Forgot Password", {
         userId,
         sessionId: req.session.id,
-        timePeriod: end - start,
+        timePeriod: Date.now() - start,
       });
     }
   );
@@ -198,12 +187,10 @@ export class AuthController {
 
       sendResponse(res, 200, { message: response.message });
       const start = Date.now();
-      const end = Date.now();
-
       this.logsService.info("Reset Password", {
         userId,
         sessionId: req.session.id,
-        timePeriod: end - start,
+        timePeriod: Date.now() - start,
       });
     }
   );
@@ -216,20 +203,53 @@ export class AuthController {
         throw new AppError(401, "Refresh token not found");
       }
 
-      const { newAccessToken, newRefreshToken } =
+      const { newAccessToken, newRefreshToken, user } =
         await this.authService.refreshToken(oldRefreshToken);
 
       res.cookie("refreshToken", newRefreshToken, cookieOptions);
       res.cookie("accessToken", newAccessToken, cookieOptions);
 
-      sendResponse(res, 200, { message: "Token refreshed successfully" });
+      sendResponse(res, 200, {
+        message: "Token refreshed successfully",
+        data: {
+          user: {
+            id: user.id,
+            name: user.name,
+            role: user.role,
+            avatar: user.avatar,
+          },
+        },
+      });
       const start = Date.now();
-      const end = Date.now();
-
       this.logsService.info("Refresh Token", {
         userId: req.user?.id,
         sessionId: req.session.id,
-        timePeriod: end - start,
+        timePeriod: Date.now() - start,
+      });
+    }
+  );
+
+  applyForVendor = asyncHandler(
+    async (req: Request, res: Response): Promise<void> => {
+      console.log("req.body => ", req.body);
+      const userId = req.user?.id;
+      if (!userId) {
+        throw new AppError(401, "User not authenticated");
+      }
+
+      const vendorData = req.body;
+      const vendor = await this.authService.applyForVendor(userId, vendorData);
+
+      sendResponse(res, 201, {
+        message: "Vendor application submitted successfully",
+        data: { vendor },
+      });
+
+      const start = Date.now();
+      this.logsService.info("Vendor Application", {
+        userId,
+        sessionId: req.session.id,
+        timePeriod: Date.now() - start,
       });
     }
   );

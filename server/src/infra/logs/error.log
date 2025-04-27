@@ -1412,3 +1412,14 @@ Foreign key constraint violated: `Interaction_productId_fkey (index)`
 [2025-04-23T21:39:46.975Z] [31MERROR[39M: Invalid access token, please log in
 [2025-04-23T22:54:47.332Z] [31MERROR[39M: Invalid access token, please log in
 [2025-04-23T23:47:12.513Z] [31MERROR[39M: Invalid access token, please log in
+[2025-04-27T14:47:40.737Z] [31MERROR[39M: Invalid access token, please log in
+[2025-04-27T14:47:41.066Z] [31MERROR[39M: User not found
+[2025-04-27T14:48:56.006Z] [31MERROR[39M: Invalid access token, please log in
+[2025-04-27T14:48:56.068Z] [31MERROR[39M: User not found
+[2025-04-27T14:49:48.057Z] [31MERROR[39M: Email or password is incorrect.
+[2025-04-27T14:49:56.510Z] [31MERROR[39M: Email or password is incorrect.
+[2025-04-27T14:50:18.220Z] [31MERROR[39M: Email or password is incorrect.
+[2025-04-27T14:50:31.409Z] [31MERROR[39M: Email or password is incorrect.
+[2025-04-27T14:51:08.631Z] [31MERROR[39M: Email or password is incorrect.
+[2025-04-27T15:17:40.672Z] [31MERROR[39M: Invalid access token, please log in
+[2025-04-27T15:24:12.304Z] [31MERROR[39M: You are not authorized to perform this action

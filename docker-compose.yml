@@ -1,0 +1,48 @@
+version: "3.8"
+
+services:
+  # PostgreSQL Database Service
+  db:
+    image: postgres:15
+    container_name: ecommerce-db
+    environment:
+      POSTGRES_USER: multivendor_user
+      POSTGRES_PASSWORD: Body,601543122016
+      POSTGRES_DB: ecommerce_multivendor
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - ecommerce-network
+
+  # Server Service (Backend)
+  server:
+    build: ./server # Path to the backend folder
+    container_name: ecommerce-server
+    environment:
+      DATABASE_URL: postgresql://multivendor_user:Body,601543122016@db:5432/ecommerce_multivendor
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+    networks:
+      - ecommerce-network
+
+  # Client Service (Frontend)
+  client:
+    build: ./client # Path to the frontend folder
+    container_name: ecommerce-client
+    ports:
+      - "3000:3000" # Expose frontend on port 3000
+    networks:
+      - ecommerce-network
+
+# Define volume for persistent PostgreSQL data
+volumes:
+  pgdata:
+
+# Define the network for inter-container communication
+networks:
+  ecommerce-network:
+    driver: bridge

@@ -11,6 +11,7 @@ enum ROLE {
   ADMIN
   USER
   SUPERADMIN
+  VENDOR
 }
 
 enum TRANSACTION_STATUS {
@@ -39,6 +40,13 @@ enum CART_STATUS {
   CONVERTED
 }
 
+enum VENDOR_STATUS {
+  PENDING
+  APPROVED
+  REJECTED
+  SUSPENDED
+}
+
 model User {
   id                              String        @id @default(uuid())
   googleId                        String?
@@ -54,6 +62,7 @@ model User {
   resetPasswordToken              String?
   resetPasswordTokenExpiresAt     DateTime?
   role                            ROLE          @default(USER)
+  vendor                          Vendor?       @relation("UserVendor")
   orders                          Order[]
   payments                        Payment[]
   addresses                       Address[]
@@ -66,6 +75,30 @@ model User {
   updatedAt                       DateTime      @updatedAt
 
   @@index([email])
+}
+
+model Vendor {
+  id            String          @id @default(uuid())
+  user          User            @relation("UserVendor", fields: [userId], references: [id], onDelete: Cascade)
+  userId        String          @unique
+  storeName     String          @unique
+  slug          String          @unique
+  description   String?
+  logo          String?
+  contact       String?
+  businessDetails Json?
+  status        VENDOR_STATUS   @default(PENDING)
+  products      Product[]
+  orders        Order[]
+  payouts       Payout[]
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  StockMovement StockMovement[]
+  Restock       Restock[]
+  OrderItem     OrderItem[]
+  CartItem      CartItem[]
+
+  @@index([userId, storeName, slug])
 }
 
 model Product {
@@ -87,6 +120,8 @@ model Product {
   reviewCount    Int             @default(0)
   category       Category?       @relation(fields: [categoryId], references: [id], onDelete: SetNull)
   categoryId     String?
+  vendor         Vendor?         @relation(fields: [vendorId], references: [id], onDelete: SetNull)
+  vendorId       String?
   orderItems     OrderItem[]
   cartItems      CartItem[]
   interactions   Interaction[]
@@ -96,29 +131,30 @@ model Product {
   updatedAt      DateTime        @updatedAt
   Restock        Restock[]
 
-  @@index([name, slug])
+  @@index([name, slug, vendorId])
 }
 
-// Logs all stock changes (restocks, orders, adjustments) with quantity, reason, and timestamp.
 model StockMovement {
   id        String   @id @default(uuid())
   productId String
   product   Product  @relation(fields: [productId], references: [id])
+  vendorId  String?
+  vendor    Vendor?  @relation(fields: [vendorId], references: [id])
   quantity  Int
-  reason    String // e.g., "restock", "order", "adjustment", "damage"
+  reason    String
   userId    String?
   createdAt DateTime @default(now())
 }
 
-
-// Tracks restock events specifically, with optional notes for context (e.g., “Manual restock for promotion”).
 model Restock {
   id        String   @id @default(uuid())
   productId String
   product   Product  @relation(fields: [productId], references: [id])
+  vendorId  String?
+  vendor    Vendor?  @relation(fields: [vendorId], references: [id])
   quantity  Int
-  notes     String? // Optional notes for restock
-  userId    String? // Optional, for admin tracking
+  notes     String?
+  userId    String?
   createdAt DateTime @default(now())
 }
 
@@ -142,6 +178,8 @@ model Order {
   orderDate   DateTime     @default(now())
   user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      String
+  vendor      Vendor?      @relation(fields: [vendorId], references: [id], onDelete: SetNull)
+  vendorId    String?
   orderItems  OrderItem[]
   payment     Payment?     @relation("OrderPayment")
   address     Address?     @relation("OrderAddress")
@@ -150,7 +188,7 @@ model Order {
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
 
-  @@index([userId])
+  @@index([userId, vendorId])
 }
 
 model OrderItem {
@@ -159,12 +197,14 @@ model OrderItem {
   orderId   String
   product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId String
+  vendorId  String?
+  vendor    Vendor?  @relation(fields: [vendorId], references: [id])
   quantity  Int      @default(1)
   price     Float
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([orderId, productId])
+  @@index([orderId, productId, vendorId])
 }
 
 model Payment {
@@ -214,15 +254,37 @@ model Shipment {
 }
 
 model Transaction {
-  id              String             @id @default(uuid())
-  order           Order              @relation("OrderTransaction", fields: [orderId], references: [id], onDelete: Cascade)
-  orderId         String             @unique
-  status          TRANSACTION_STATUS @default(PENDING)
-  transactionDate DateTime           @default(now())
-  createdAt       DateTime           @default(now())
-  updatedAt       DateTime           @updatedAt
+  id                 String             @id @default(uuid())
+  order              Order              @relation("OrderTransaction", fields: [orderId], references: [id], onDelete: Cascade)
+  orderId            String             @unique
+  status             TRANSACTION_STATUS @default(PENDING)
+  transactionDate    DateTime           @default(now())
+  vendorPayoutAmount Float?             @default(0)
+  platformCommission Float?             @default(0)
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
 
   @@index([orderId])
+}
+
+enum PAYOUT_STATUS {
+  PENDING
+  COMPLETED
+  FAILED
+}
+
+model Payout {
+  id            String        @id @default(uuid())
+  vendor        Vendor        @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  vendorId      String
+  amount        Float
+  status        PAYOUT_STATUS @default(PENDING) // e.g., PENDING, COMPLETED, FAILED
+  payoutDate    DateTime?
+  transactionId String? // Reference to payment provider transaction
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@index([vendorId])
 }
 
 model Cart {
@@ -245,12 +307,14 @@ model CartItem {
   cartId    String
   product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId String
+  vendorId  String?
+  vendor    Vendor?  @relation(fields: [vendorId], references: [id])
   quantity  Int      @default(1)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@unique([cartId, productId])
-  @@index([cartId, productId])
+  @@index([cartId, productId, vendorId])
 }
 
 enum CART_EVENT {
@@ -311,9 +375,9 @@ model Report {
 
 model Log {
   id        String   @id @default(uuid())
-  level     String // e.g., "info", "error", "warn", "debug"
+  level     String
   message   String
-  context   Json? // Optional: Additional data (e.g., userId, request details)
+  context   Json?
   createdAt DateTime @default(now())
 }
 

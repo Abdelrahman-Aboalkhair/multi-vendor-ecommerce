@@ -38,6 +38,17 @@ export const authApi = apiSlice.injectEndpoints({
         }
       },
     }),
+
+    applyforVendor: builder.mutation<
+      { user: User; success: boolean },
+      FormData
+    >({
+      query: (data) => ({
+        url: "/auth/apply-for-vendor",
+        method: "POST",
+        body: data,
+      }),
+    }),
     signOut: builder.mutation<void, void>({
       query: () => ({
         url: "/auth/sign-out",
@@ -87,6 +98,7 @@ export const {
   useSignInMutation,
   useSignupMutation,
   useSignOutMutation,
+  useApplyforVendorMutation,
   useVerifyEmailMutation,
   useForgotPasswordMutation,
   useResetPasswordMutation,

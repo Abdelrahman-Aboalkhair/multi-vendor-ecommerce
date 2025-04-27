@@ -1,372 +1,58 @@
-[2025-04-23T13:12:59.223Z] [31MERROR[39M: uncaughtException: 
-Invalid `prisma.cart.delete()` invocation in
-/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/src/modules/cart/cart.repository.ts:87:29
+[2025-04-24T11:05:17.930Z] [31MERROR[39M: uncaughtException: ⨯ Unable to compile TypeScript:
+[96msrc/infra/database/database.config.ts[0m:[93m7[0m:[93m22[0m - [91merror[0m[90m TS7031: [0mBinding element 'args' implicitly has an 'any' type.
 
-  84     });
-  85   }
-  86 }
-→ 87 await prisma.cart.delete(
-Foreign key constraint violated: `CartEvent_cartId_fkey (index)`
-PrismaClientKnownRequestError: 
-Invalid `prisma.cart.delete()` invocation in
-/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/src/modules/cart/cart.repository.ts:87:29
+[7m7[0m       async create({ args, query }) {
+[7m [0m [91m                     ~~~~[0m
+[96msrc/infra/database/database.config.ts[0m:[93m7[0m:[93m28[0m - [91merror[0m[90m TS7031: [0mBinding element 'query' implicitly has an 'any' type.
 
-  84     });
-  85   }
-  86 }
-→ 87 await prisma.cart.delete(
-Foreign key constraint violated: `CartEvent_cartId_fkey (index)`
-    at zn.handleRequestError (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/@prisma/client/runtime/library.js:121:7459)
-    at zn.handleAndLogRequestError (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/@prisma/client/runtime/library.js:121:6784)
-    at zn.request (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/@prisma/client/runtime/library.js:121:6491)
-    at async l (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/@prisma/client/runtime/library.js:130:9778)
-[2025-04-23T21:59:53.705Z] [31MERROR[39M: uncaughtException: Unknown type "DateTime".
+[7m7[0m       async create({ args, query }) {
+[7m [0m [91m                           ~~~~~[0m
+[96msrc/infra/database/database.config.ts[0m:[93m16[0m:[93m22[0m - [91merror[0m[90m TS7031: [0mBinding element 'args' implicitly has an 'any' type.
 
-Unknown type "DateTime".
-Error: Unknown type "DateTime".
+[7m16[0m       async update({ args, query }) {
+[7m  [0m [91m                     ~~~~[0m
+[96msrc/infra/database/database.config.ts[0m:[93m16[0m:[93m28[0m - [91merror[0m[90m TS7031: [0mBinding element 'query' implicitly has an 'any' type.
 
-Unknown type "DateTime".
-    at assertValidSDL (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/graphql/validation/validate.js:135:11)
-    at buildASTSchema (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/graphql/utilities/buildASTSchema.js:44:34)
-    at makeExecutableSchema (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/@graphql-tools/schema/cjs/makeExecutableSchema.js:73:47)
-    at Object.<anonymous> (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/src/modules/product/graphql/schema.ts:81:50)
-    at Module._compile (node:internal/modules/cjs/loader:1723:14)
-    at Module.m._compile (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/ts-node/src/index.ts:1618:23)
-    at loadTS (node:internal/modules/cjs/loader:1815:10)
-    at Object.require.extensions.<computed> [as .ts] (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/ts-node/src/index.ts:1621:12)
-    at Module.load (node:internal/modules/cjs/loader:1458:32)
-    at Function._load (node:internal/modules/cjs/loader:1275:12)
-    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
-    at wrapModuleLoad (node:internal/modules/cjs/loader:234:24)
-    at Module.require (node:internal/modules/cjs/loader:1480:12)
-    at require (node:internal/modules/helpers:135:16)
-    at Object.<anonymous> (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/src/graphql/v1/schema.ts:2:1)
-    at Module._compile (node:internal/modules/cjs/loader:1723:14)
-[2025-04-23T22:00:07.384Z] [31MERROR[39M: uncaughtException: Unknown type "DateTime".
-
-Unknown type "DateTime".
-
-Unknown type "DateTime".
-
-Unknown type "DateTime".
-
-Unknown type "DateTime".
-
-Unknown type "DateTime".
-
-Unknown type "InventorySummary".
-Error: Unknown type "DateTime".
-
-Unknown type "DateTime".
-
-Unknown type "DateTime".
-
-Unknown type "DateTime".
-
-Unknown type "DateTime".
-
-Unknown type "DateTime".
-
-Unknown type "InventorySummary".
-    at assertValidSDL (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/graphql/validation/validate.js:135:11)
-    at buildASTSchema (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/graphql/utilities/buildASTSchema.js:44:34)
-    at makeExecutableSchema (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/@graphql-tools/schema/cjs/makeExecutableSchema.js:73:47)
-    at Object.<anonymous> (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/src/modules/product/graphql/schema.ts:88:50)
-    at Module._compile (node:internal/modules/cjs/loader:1723:14)
-    at Module.m._compile (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/ts-node/src/index.ts:1618:23)
-    at loadTS (node:internal/modules/cjs/loader:1815:10)
-    at Object.require.extensions.<computed> [as .ts] (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/ts-node/src/index.ts:1621:12)
-    at Module.load (node:internal/modules/cjs/loader:1458:32)
-    at Function._load (node:internal/modules/cjs/loader:1275:12)
-    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
-    at wrapModuleLoad (node:internal/modules/cjs/loader:234:24)
-    at Module.require (node:internal/modules/cjs/loader:1480:12)
-    at require (node:internal/modules/helpers:135:16)
-    at Object.<anonymous> (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/src/graphql/v1/schema.ts:2:1)
-    at Module._compile (node:internal/modules/cjs/loader:1723:14)
-[2025-04-23T22:00:40.657Z] [31MERROR[39M: uncaughtException: Unknown type "DateTime".
-
-Unknown type "DateTime".
-
-Unknown type "DateTime".
-
-Unknown type "DateTime".
-
-Unknown type "DateTime".
-
-Unknown type "DateTime".
-Error: Unknown type "DateTime".
-
-Unknown type "DateTime".
-
-Unknown type "DateTime".
-
-Unknown type "DateTime".
-
-Unknown type "DateTime".
-
-Unknown type "DateTime".
-    at assertValidSDL (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/graphql/validation/validate.js:135:11)
-    at buildASTSchema (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/graphql/utilities/buildASTSchema.js:44:34)
-    at makeExecutableSchema (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/@graphql-tools/schema/cjs/makeExecutableSchema.js:73:47)
-    at Object.<anonymous> (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/src/modules/product/graphql/schema.ts:94:50)
-    at Module._compile (node:internal/modules/cjs/loader:1723:14)
-    at Module.m._compile (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/ts-node/src/index.ts:1618:23)
-    at loadTS (node:internal/modules/cjs/loader:1815:10)
-    at Object.require.extensions.<computed> [as .ts] (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/ts-node/src/index.ts:1621:12)
-    at Module.load (node:internal/modules/cjs/loader:1458:32)
-    at Function._load (node:internal/modules/cjs/loader:1275:12)
-    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
-    at wrapModuleLoad (node:internal/modules/cjs/loader:234:24)
-    at Module.require (node:internal/modules/cjs/loader:1480:12)
-    at require (node:internal/modules/helpers:135:16)
-    at Object.<anonymous> (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/src/graphql/v1/schema.ts:2:1)
-    at Module._compile (node:internal/modules/cjs/loader:1723:14)
-[2025-04-23T22:00:47.998Z] [31MERROR[39M: uncaughtException: Unknown type "DateTime".
-
-Unknown type "DateTime".
-
-Unknown type "DateTime".
-
-Unknown type "DateTime".
-
-Unknown type "DateTime".
-
-Unknown type "DateTime".
-Error: Unknown type "DateTime".
-
-Unknown type "DateTime".
-
-Unknown type "DateTime".
-
-Unknown type "DateTime".
-
-Unknown type "DateTime".
-
-Unknown type "DateTime".
-    at assertValidSDL (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/graphql/validation/validate.js:135:11)
-    at buildASTSchema (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/graphql/utilities/buildASTSchema.js:44:34)
-    at makeExecutableSchema (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/@graphql-tools/schema/cjs/makeExecutableSchema.js:73:47)
-    at Object.<anonymous> (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/src/modules/product/graphql/schema.ts:99:50)
-    at Module._compile (node:internal/modules/cjs/loader:1723:14)
-    at Module.m._compile (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/ts-node/src/index.ts:1618:23)
-    at loadTS (node:internal/modules/cjs/loader:1815:10)
-    at Object.require.extensions.<computed> [as .ts] (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/ts-node/src/index.ts:1621:12)
-    at Module.load (node:internal/modules/cjs/loader:1458:32)
-    at Function._load (node:internal/modules/cjs/loader:1275:12)
-    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
-    at wrapModuleLoad (node:internal/modules/cjs/loader:234:24)
-    at Module.require (node:internal/modules/cjs/loader:1480:12)
-    at require (node:internal/modules/helpers:135:16)
-    at Object.<anonymous> (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/src/graphql/v1/schema.ts:2:1)
-    at Module._compile (node:internal/modules/cjs/loader:1723:14)
-[2025-04-23T22:03:39.006Z] [31MERROR[39M: uncaughtException: ⨯ Unable to compile TypeScript:
-[96msrc/modules/product/graphql/resolver.ts[0m:[93m174[0m:[93m14[0m - [91merror[0m[90m TS2304: [0mCannot find name 'prisma'.
-
-[7m174[0m       return prisma.restock.create({
-[7m   [0m [91m             ~~~~~~[0m
+[7m16[0m       async update({ args, query }) {
+[7m  [0m [91m                           ~~~~~[0m
 
 TSError: ⨯ Unable to compile TypeScript:
-[96msrc/modules/product/graphql/resolver.ts[0m:[93m174[0m:[93m14[0m - [91merror[0m[90m TS2304: [0mCannot find name 'prisma'.
+[96msrc/infra/database/database.config.ts[0m:[93m7[0m:[93m22[0m - [91merror[0m[90m TS7031: [0mBinding element 'args' implicitly has an 'any' type.
 
-[7m174[0m       return prisma.restock.create({
-[7m   [0m [91m             ~~~~~~[0m
+[7m7[0m       async create({ args, query }) {
+[7m [0m [91m                     ~~~~[0m
+[96msrc/infra/database/database.config.ts[0m:[93m7[0m:[93m28[0m - [91merror[0m[90m TS7031: [0mBinding element 'query' implicitly has an 'any' type.
 
-    at createTSError (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/ts-node/src/index.ts:859:12)
-    at reportTSError (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/ts-node/src/index.ts:863:19)
-    at getOutput (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/ts-node/src/index.ts:1077:36)
-    at Object.compile (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/ts-node/src/index.ts:1433:41)
-    at Module.m._compile (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/ts-node/src/index.ts:1617:30)
+[7m7[0m       async create({ args, query }) {
+[7m [0m [91m                           ~~~~~[0m
+[96msrc/infra/database/database.config.ts[0m:[93m16[0m:[93m22[0m - [91merror[0m[90m TS7031: [0mBinding element 'args' implicitly has an 'any' type.
+
+[7m16[0m       async update({ args, query }) {
+[7m  [0m [91m                     ~~~~[0m
+[96msrc/infra/database/database.config.ts[0m:[93m16[0m:[93m28[0m - [91merror[0m[90m TS7031: [0mBinding element 'query' implicitly has an 'any' type.
+
+[7m16[0m       async update({ args, query }) {
+[7m  [0m [91m                           ~~~~~[0m
+
+    at createTSError (/home/abdelrahman-aboalkhair/Projects/WEB/code/multi-vendor-ecommerce/server/node_modules/ts-node/src/index.ts:859:12)
+    at reportTSError (/home/abdelrahman-aboalkhair/Projects/WEB/code/multi-vendor-ecommerce/server/node_modules/ts-node/src/index.ts:863:19)
+    at getOutput (/home/abdelrahman-aboalkhair/Projects/WEB/code/multi-vendor-ecommerce/server/node_modules/ts-node/src/index.ts:1077:36)
+    at Object.compile (/home/abdelrahman-aboalkhair/Projects/WEB/code/multi-vendor-ecommerce/server/node_modules/ts-node/src/index.ts:1433:41)
+    at Module.m._compile (/home/abdelrahman-aboalkhair/Projects/WEB/code/multi-vendor-ecommerce/server/node_modules/ts-node/src/index.ts:1617:30)
     at loadTS (node:internal/modules/cjs/loader:1815:10)
-    at Object.require.extensions.<computed> [as .ts] (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/ts-node/src/index.ts:1621:12)
+    at Object.require.extensions.<computed> [as .ts] (/home/abdelrahman-aboalkhair/Projects/WEB/code/multi-vendor-ecommerce/server/node_modules/ts-node/src/index.ts:1621:12)
+    at Module.load (node:internal/modules/cjs/loader:1458:32)
+    at Function._load (node:internal/modules/cjs/loader:1275:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+[2025-04-24T11:05:49.688Z] [31MERROR[39M: uncaughtException: @prisma/client did not initialize yet. Please run "prisma generate" and try to import it again.
+Error: @prisma/client did not initialize yet. Please run "prisma generate" and try to import it again.
+    at new PrismaClient (/home/abdelrahman-aboalkhair/Projects/WEB/code/multi-vendor-ecommerce/server/node_modules/.prisma/client/default.js:43:11)
+    at Object.<anonymous> (/home/abdelrahman-aboalkhair/Projects/WEB/code/multi-vendor-ecommerce/server/src/infra/database/database.config.ts:4:16)
+    at Module._compile (node:internal/modules/cjs/loader:1723:14)
+    at Module.m._compile (/home/abdelrahman-aboalkhair/Projects/WEB/code/multi-vendor-ecommerce/server/node_modules/ts-node/src/index.ts:1618:23)
+    at loadTS (node:internal/modules/cjs/loader:1815:10)
+    at Object.require.extensions.<computed> [as .ts] (/home/abdelrahman-aboalkhair/Projects/WEB/code/multi-vendor-ecommerce/server/node_modules/ts-node/src/index.ts:1621:12)
     at Module.load (node:internal/modules/cjs/loader:1458:32)
     at Function._load (node:internal/modules/cjs/loader:1275:12)
     at TracingChannel.traceSync (node:diagnostics_channel:322:14)
     at wrapModuleLoad (node:internal/modules/cjs/loader:234:24)
-    at Module.require (node:internal/modules/cjs/loader:1480:12)
-    at require (node:internal/modules/helpers:135:16)
-    at Object.<anonymous> (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/src/modules/product/graphql/schema.ts:3:1)
-    at Module._compile (node:internal/modules/cjs/loader:1723:14)
-    at Module.m._compile (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/ts-node/src/index.ts:1618:23)
-[2025-04-23T22:04:16.629Z] [31MERROR[39M: uncaughtException: Query.createRestock defined in resolvers, but not in schema
-Error: Query.createRestock defined in resolvers, but not in schema
-    at addResolversToSchema (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/@graphql-tools/schema/cjs/addResolversToSchema.js:83:39)
-    at makeExecutableSchema (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/@graphql-tools/schema/cjs/makeExecutableSchema.js:76:65)
-    at Object.<anonymous> (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/src/modules/product/graphql/schema.ts:102:50)
-    at Module._compile (node:internal/modules/cjs/loader:1723:14)
-    at Module.m._compile (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/ts-node/src/index.ts:1618:23)
-    at loadTS (node:internal/modules/cjs/loader:1815:10)
-    at Object.require.extensions.<computed> [as .ts] (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/ts-node/src/index.ts:1621:12)
-    at Module.load (node:internal/modules/cjs/loader:1458:32)
-    at Function._load (node:internal/modules/cjs/loader:1275:12)
-    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
-    at wrapModuleLoad (node:internal/modules/cjs/loader:234:24)
-    at Module.require (node:internal/modules/cjs/loader:1480:12)
-    at require (node:internal/modules/helpers:135:16)
-    at Object.<anonymous> (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/src/graphql/v1/schema.ts:2:1)
-    at Module._compile (node:internal/modules/cjs/loader:1723:14)
-    at Module.m._compile (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/ts-node/src/index.ts:1618:23)
-[2025-04-23T22:04:39.695Z] [31MERROR[39M: uncaughtException: ⨯ Unable to compile TypeScript:
-[96msrc/modules/product/graphql/resolver.ts[0m:[93m183[0m:[93m14[0m - [91merror[0m[90m TS2304: [0mCannot find name 'prisma'.
-
-[7m183[0m       return prisma.product.update({
-[7m   [0m [91m             ~~~~~~[0m
-[96msrc/modules/product/graphql/resolver.ts[0m:[93m195[0m:[93m14[0m - [91merror[0m[90m TS2304: [0mCannot find name 'prisma'.
-
-[7m195[0m       return prisma.stockMovement.create({
-[7m   [0m [91m             ~~~~~~[0m
-[96msrc/modules/product/graphql/resolver.ts[0m:[93m189[0m:[93m5[0m - [91merror[0m[90m TS1005: [0m',' expected.
-
-[7m189[0m     async createStockMovement(data: {
-[7m   [0m [91m    ~~~~~[0m
-
-TSError: ⨯ Unable to compile TypeScript:
-[96msrc/modules/product/graphql/resolver.ts[0m:[93m183[0m:[93m14[0m - [91merror[0m[90m TS2304: [0mCannot find name 'prisma'.
-
-[7m183[0m       return prisma.product.update({
-[7m   [0m [91m             ~~~~~~[0m
-[96msrc/modules/product/graphql/resolver.ts[0m:[93m195[0m:[93m14[0m - [91merror[0m[90m TS2304: [0mCannot find name 'prisma'.
-
-[7m195[0m       return prisma.stockMovement.create({
-[7m   [0m [91m             ~~~~~~[0m
-[96msrc/modules/product/graphql/resolver.ts[0m:[93m189[0m:[93m5[0m - [91merror[0m[90m TS1005: [0m',' expected.
-
-[7m189[0m     async createStockMovement(data: {
-[7m   [0m [91m    ~~~~~[0m
-
-    at createTSError (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/ts-node/src/index.ts:859:12)
-    at reportTSError (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/ts-node/src/index.ts:863:19)
-    at getOutput (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/ts-node/src/index.ts:1077:36)
-    at Object.compile (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/ts-node/src/index.ts:1433:41)
-    at Module.m._compile (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/ts-node/src/index.ts:1617:30)
-    at loadTS (node:internal/modules/cjs/loader:1815:10)
-    at Object.require.extensions.<computed> [as .ts] (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/ts-node/src/index.ts:1621:12)
-    at Module.load (node:internal/modules/cjs/loader:1458:32)
-    at Function._load (node:internal/modules/cjs/loader:1275:12)
-    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
-    at wrapModuleLoad (node:internal/modules/cjs/loader:234:24)
-    at Module.require (node:internal/modules/cjs/loader:1480:12)
-    at require (node:internal/modules/helpers:135:16)
-    at Object.<anonymous> (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/src/modules/product/graphql/schema.ts:3:1)
-    at Module._compile (node:internal/modules/cjs/loader:1723:14)
-    at Module.m._compile (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/ts-node/src/index.ts:1618:23)
-[2025-04-23T22:05:04.307Z] [31MERROR[39M: uncaughtException: Query.createRestock defined in resolvers, but not in schema
-Error: Query.createRestock defined in resolvers, but not in schema
-    at addResolversToSchema (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/@graphql-tools/schema/cjs/addResolversToSchema.js:83:39)
-    at makeExecutableSchema (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/@graphql-tools/schema/cjs/makeExecutableSchema.js:76:65)
-    at Object.<anonymous> (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/src/modules/product/graphql/schema.ts:102:50)
-    at Module._compile (node:internal/modules/cjs/loader:1723:14)
-    at Module.m._compile (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/ts-node/src/index.ts:1618:23)
-    at loadTS (node:internal/modules/cjs/loader:1815:10)
-    at Object.require.extensions.<computed> [as .ts] (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/ts-node/src/index.ts:1621:12)
-    at Module.load (node:internal/modules/cjs/loader:1458:32)
-    at Function._load (node:internal/modules/cjs/loader:1275:12)
-    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
-    at wrapModuleLoad (node:internal/modules/cjs/loader:234:24)
-    at Module.require (node:internal/modules/cjs/loader:1480:12)
-    at require (node:internal/modules/helpers:135:16)
-    at Object.<anonymous> (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/src/graphql/v1/schema.ts:2:1)
-    at Module._compile (node:internal/modules/cjs/loader:1723:14)
-    at Module.m._compile (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/ts-node/src/index.ts:1618:23)
-[2025-04-23T22:05:25.492Z] [31MERROR[39M: uncaughtException: Query.createRestock defined in resolvers, but not in schema
-Error: Query.createRestock defined in resolvers, but not in schema
-    at addResolversToSchema (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/@graphql-tools/schema/cjs/addResolversToSchema.js:83:39)
-    at makeExecutableSchema (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/@graphql-tools/schema/cjs/makeExecutableSchema.js:76:65)
-    at Object.<anonymous> (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/src/modules/product/graphql/schema.ts:102:50)
-    at Module._compile (node:internal/modules/cjs/loader:1723:14)
-    at Module.m._compile (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/ts-node/src/index.ts:1618:23)
-    at loadTS (node:internal/modules/cjs/loader:1815:10)
-    at Object.require.extensions.<computed> [as .ts] (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/ts-node/src/index.ts:1621:12)
-    at Module.load (node:internal/modules/cjs/loader:1458:32)
-    at Function._load (node:internal/modules/cjs/loader:1275:12)
-    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
-    at wrapModuleLoad (node:internal/modules/cjs/loader:234:24)
-    at Module.require (node:internal/modules/cjs/loader:1480:12)
-    at require (node:internal/modules/helpers:135:16)
-    at Object.<anonymous> (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/src/graphql/v1/schema.ts:2:1)
-    at Module._compile (node:internal/modules/cjs/loader:1723:14)
-    at Module.m._compile (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/ts-node/src/index.ts:1618:23)
-[2025-04-23T22:05:42.693Z] [31MERROR[39M: uncaughtException: Query.createRestock defined in resolvers, but not in schema
-Error: Query.createRestock defined in resolvers, but not in schema
-    at addResolversToSchema (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/@graphql-tools/schema/cjs/addResolversToSchema.js:83:39)
-    at makeExecutableSchema (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/@graphql-tools/schema/cjs/makeExecutableSchema.js:76:65)
-    at Object.<anonymous> (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/src/modules/product/graphql/schema.ts:102:50)
-    at Module._compile (node:internal/modules/cjs/loader:1723:14)
-    at Module.m._compile (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/ts-node/src/index.ts:1618:23)
-    at loadTS (node:internal/modules/cjs/loader:1815:10)
-    at Object.require.extensions.<computed> [as .ts] (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/ts-node/src/index.ts:1621:12)
-    at Module.load (node:internal/modules/cjs/loader:1458:32)
-    at Function._load (node:internal/modules/cjs/loader:1275:12)
-    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
-    at wrapModuleLoad (node:internal/modules/cjs/loader:234:24)
-    at Module.require (node:internal/modules/cjs/loader:1480:12)
-    at require (node:internal/modules/helpers:135:16)
-    at Object.<anonymous> (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/src/graphql/v1/schema.ts:2:1)
-    at Module._compile (node:internal/modules/cjs/loader:1723:14)
-    at Module.m._compile (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/ts-node/src/index.ts:1618:23)
-[2025-04-23T22:08:00.056Z] [31MERROR[39M: uncaughtException: ⨯ Unable to compile TypeScript:
-[96msrc/modules/product/product.repository.ts[0m:[93m69[0m:[93m9[0m - [91merror[0m[90m TS2393: [0mDuplicate function implementation.
-
-[7m69[0m   async updateProductStock(productId: string, quantity: number) {
-[7m  [0m [91m        ~~~~~~~~~~~~~~~~~~[0m
-[96msrc/modules/product/product.repository.ts[0m:[93m87[0m:[93m9[0m - [91merror[0m[90m TS2393: [0mDuplicate function implementation.
-
-[7m87[0m   async updateProductStock(id: string, stock: number) {
-[7m  [0m [91m        ~~~~~~~~~~~~~~~~~~[0m
-
-TSError: ⨯ Unable to compile TypeScript:
-[96msrc/modules/product/product.repository.ts[0m:[93m69[0m:[93m9[0m - [91merror[0m[90m TS2393: [0mDuplicate function implementation.
-
-[7m69[0m   async updateProductStock(productId: string, quantity: number) {
-[7m  [0m [91m        ~~~~~~~~~~~~~~~~~~[0m
-[96msrc/modules/product/product.repository.ts[0m:[93m87[0m:[93m9[0m - [91merror[0m[90m TS2393: [0mDuplicate function implementation.
-
-[7m87[0m   async updateProductStock(id: string, stock: number) {
-[7m  [0m [91m        ~~~~~~~~~~~~~~~~~~[0m
-
-    at createTSError (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/ts-node/src/index.ts:859:12)
-    at reportTSError (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/ts-node/src/index.ts:863:19)
-    at getOutput (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/ts-node/src/index.ts:1077:36)
-    at Object.compile (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/ts-node/src/index.ts:1433:41)
-    at Module.m._compile (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/ts-node/src/index.ts:1617:30)
-    at loadTS (node:internal/modules/cjs/loader:1815:10)
-    at Object.require.extensions.<computed> [as .ts] (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/ts-node/src/index.ts:1621:12)
-    at Module.load (node:internal/modules/cjs/loader:1458:32)
-    at Function._load (node:internal/modules/cjs/loader:1275:12)
-    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
-[2025-04-23T22:08:21.202Z] [31MERROR[39M: uncaughtException: Query.createRestock defined in resolvers, but not in schema
-Error: Query.createRestock defined in resolvers, but not in schema
-    at addResolversToSchema (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/@graphql-tools/schema/cjs/addResolversToSchema.js:83:39)
-    at makeExecutableSchema (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/@graphql-tools/schema/cjs/makeExecutableSchema.js:76:65)
-    at Object.<anonymous> (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/src/modules/product/graphql/schema.ts:102:50)
-    at Module._compile (node:internal/modules/cjs/loader:1723:14)
-    at Module.m._compile (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/ts-node/src/index.ts:1618:23)
-    at loadTS (node:internal/modules/cjs/loader:1815:10)
-    at Object.require.extensions.<computed> [as .ts] (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/ts-node/src/index.ts:1621:12)
-    at Module.load (node:internal/modules/cjs/loader:1458:32)
-    at Function._load (node:internal/modules/cjs/loader:1275:12)
-    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
-    at wrapModuleLoad (node:internal/modules/cjs/loader:234:24)
-    at Module.require (node:internal/modules/cjs/loader:1480:12)
-    at require (node:internal/modules/helpers:135:16)
-    at Object.<anonymous> (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/src/graphql/v1/schema.ts:2:1)
-    at Module._compile (node:internal/modules/cjs/loader:1723:14)
-    at Module.m._compile (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/ts-node/src/index.ts:1618:23)
-[2025-04-23T22:08:56.845Z] [31MERROR[39M: uncaughtException: Query.createRestock defined in resolvers, but not in schema
-Error: Query.createRestock defined in resolvers, but not in schema
-    at addResolversToSchema (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/@graphql-tools/schema/cjs/addResolversToSchema.js:83:39)
-    at makeExecutableSchema (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/@graphql-tools/schema/cjs/makeExecutableSchema.js:76:65)
-    at Object.<anonymous> (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/src/modules/product/graphql/schema.ts:102:50)
-    at Module._compile (node:internal/modules/cjs/loader:1723:14)
-    at Module.m._compile (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/ts-node/src/index.ts:1618:23)
-    at loadTS (node:internal/modules/cjs/loader:1815:10)
-    at Object.require.extensions.<computed> [as .ts] (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/ts-node/src/index.ts:1621:12)
-    at Module.load (node:internal/modules/cjs/loader:1458:32)
-    at Function._load (node:internal/modules/cjs/loader:1275:12)
-    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
-    at wrapModuleLoad (node:internal/modules/cjs/loader:234:24)
-    at Module.require (node:internal/modules/cjs/loader:1480:12)
-    at require (node:internal/modules/helpers:135:16)
-    at Object.<anonymous> (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/src/graphql/v1/schema.ts:2:1)
-    at Module._compile (node:internal/modules/cjs/loader:1723:14)
-    at Module.m._compile (/home/abdelrahman-aboalkhair/Projects/WEB/code/full-stack-ecommerce/server/node_modules/ts-node/src/index.ts:1618:23)

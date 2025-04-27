@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useEffect } from "react";
+import React, { useRef } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
@@ -12,32 +12,28 @@ import {
   Settings,
   ChevronRight,
   Shield,
+  Store,
 } from "lucide-react";
 import { useSignOutMutation } from "@/app/store/apis/AuthApi";
+import useClickOutside from "@/app/hooks/dom/useClickOutside";
+import useEventListener from "@/app/hooks/dom/useEventListener";
 
 const UserMenu = ({ menuOpen, closeMenu, user }) => {
   const [signout] = useSignOutMutation();
   const router = useRouter();
   const menuRef = useRef(null);
 
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (menuRef.current && !menuRef.current.contains(event.target)) {
-        closeMenu();
-      }
-    };
-    if (menuOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
+  useClickOutside(menuRef, () => closeMenu());
+
+  useEventListener("keydown", (event) => {
+    if (event.key === "Escape" && menuOpen) {
+      closeMenu();
     }
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [menuOpen, closeMenu]);
+  });
 
   const handleSignOut = async () => {
     try {
-      const res = await signout();
-      console.log("res => ", res);
+      await signout();
       router.push("/sign-in");
     } catch (error) {
       console.error("Error signing out:", error);
@@ -72,6 +68,12 @@ const UserMenu = ({ menuOpen, closeMenu, user }) => {
           icon: <Settings size={18} className="text-gray-500" />,
           show: true,
         },
+        {
+          href: "/vendor/onboarding",
+          label: "Become a Vendor",
+          icon: <Store size={18} className="text-teal-500" />,
+          show: user?.role === "USER",
+        },
       ],
     },
     {
@@ -93,7 +95,6 @@ const UserMenu = ({ menuOpen, closeMenu, user }) => {
     },
   ];
 
-  // ✨ Minimal animation variants
   const menuVariants = {
     hidden: { opacity: 0, y: -10 },
     visible: {

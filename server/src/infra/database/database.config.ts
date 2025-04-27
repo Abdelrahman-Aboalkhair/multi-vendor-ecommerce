@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
 const prisma = new PrismaClient().$extends({
   query: {
     user: {
-      async create({ args, query }) {
+      async create({ args, query }: any) {
         if (args.data.password && typeof args.data.password === "string") {
           const hashedPassword = await bcrypt.hash(args.data.password, 10);
           args.data.password = hashedPassword;
@@ -13,7 +13,7 @@ const prisma = new PrismaClient().$extends({
         return query(args);
       },
 
-      async update({ args, query }) {
+      async update({ args, query }: any) {
         if (args.data.password && typeof args.data.password === "string") {
           const hashedPassword = await bcrypt.hash(args.data.password, 10);
           args.data.password = hashedPassword;

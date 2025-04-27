@@ -115,4 +115,13 @@ export class AuthRepository {
       },
     });
   }
+
+  async updateUserRole(userId: string, role: ROLE) {
+    return prisma.user.update({
+      where: { id: userId },
+      data: {
+        role,
+      },
+    });
+  }
 }

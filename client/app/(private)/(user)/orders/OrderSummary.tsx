@@ -12,7 +12,7 @@ const OrderSummary = ({ order }) => {
   const subtotal = order.amount;
   const total = useMemo(() => {
     return formatPrice(subtotal + shippingCost + platformFees);
-  }, [subtotal, shippingCost, platformFees]);
+  }, [subtotal, shippingCost, platformFees, formatPrice]);
 
   return (
     <motion.div
