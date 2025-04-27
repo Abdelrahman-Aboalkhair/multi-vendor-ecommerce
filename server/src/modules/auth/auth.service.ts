@@ -13,6 +13,7 @@ import { VendorRepository } from "../vendor/vendor.repository";
 import BadRequestError from "@/shared/errors/BadRequestError";
 import NotFoundError from "@/shared/errors/NotFoundError";
 import slugify from "@/shared/utils/slugify";
+import { uploadToCloudinary } from "@/shared/utils/uploadToCloudinary";
 
 export class AuthService {
   constructor(
@@ -273,8 +274,13 @@ export class AuthService {
     vendorData: {
       storeName: string;
       description?: string;
-      logo?: string;
       contact?: string;
+      businessDetails?: {
+        taxId?: string;
+        businessLicense?: string;
+        otherDocuments?: string[];
+      };
+      logos?: string[];
     }
   ) {
     const existingVendor = await this.vendorRepository.findByUserId(userId);
@@ -305,9 +311,10 @@ export class AuthService {
       storeName: vendorData.storeName,
       slug,
       description: vendorData.description,
-      logo: vendorData.logo,
+      logo: "",
       contact: vendorData.contact,
       status: VENDOR_STATUS.PENDING,
+      businessDetails: vendorData.businessDetails || {},
     });
 
     await this.authRepository.updateUserRole(userId, ROLE.VENDOR);

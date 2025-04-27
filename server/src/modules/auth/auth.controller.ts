@@ -8,6 +8,7 @@ import { tokenUtils } from "@/shared/utils/authUtils";
 import AppError from "@/shared/errors/AppError";
 import { CartService } from "../cart/cart.service";
 import { makeLogsService } from "../logs/logs.factory";
+import { uploadToCloudinary } from "@/shared/utils/uploadToCloudinary";
 
 const { maxAge, ...clearCookieOptions } = cookieOptions;
 
@@ -237,8 +238,20 @@ export class AuthController {
         throw new AppError(401, "User not authenticated");
       }
 
+      const logos = req.files as Express.Multer.File[];
+
+      let logoUrls: string[] = [];
+
+      if (Array.isArray(logos) && logos.length > 0) {
+        const uploadedLogos = await uploadToCloudinary(logos);
+        logoUrls = uploadedLogos.map((logo) => logo.url).filter(Boolean);
+      }
+
       const vendorData = req.body;
-      const vendor = await this.authService.applyForVendor(userId, vendorData);
+      const vendor = await this.authService.applyForVendor(userId, {
+        ...vendorData,
+        logos: logoUrls.length > 0 ? logoUrls : undefined,
+      });
 
       sendResponse(res, 201, {
         message: "Vendor application submitted successfully",

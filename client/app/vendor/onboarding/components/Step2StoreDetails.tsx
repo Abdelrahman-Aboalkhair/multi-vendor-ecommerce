@@ -2,6 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import ImageUploader from "@/app/components/molecules/ImageUploader";
 import { Mail } from "lucide-react";
 import Input from "@/app/components/atoms/Input";
 import TextArea from "@/app/components/atoms/TextArea";
@@ -9,20 +10,30 @@ import TextArea from "@/app/components/atoms/TextArea";
 const schema = z.object({
   storeName: z.string().min(1, "Store name is required"),
   description: z.string().optional(),
-  logo: z.string().url("Must be a valid URL").optional().or(z.literal("")),
   contact: z
     .string()
     .email("Must be a valid email")
     .optional()
     .or(z.literal("")),
+  businessDetails: z.object({
+    taxId: z.string().optional(),
+    businessLicense: z.string().optional(),
+    otherDocuments: z.array(z.string()).optional(),
+  }),
+  logoFiles: z.array(z.any()).optional(),
 });
 
 interface Step2StoreDetailsProps {
   formData: {
     storeName: string;
     description: string;
-    logo: string;
     contact: string;
+    businessDetails: {
+      taxId: string;
+      businessLicense: string;
+      otherDocuments: string[];
+    };
+    logoFiles: File[];
   };
   onChange: (data: any) => void;
   onNext: () => void;
@@ -39,14 +50,16 @@ const Step2StoreDetails: React.FC<Step2StoreDetailsProps> = ({
     control,
     handleSubmit,
     formState: { errors },
+    watch,
+    setValue,
   } = useForm({
     resolver: zodResolver(schema),
     defaultValues: formData,
   });
 
+  console.log("formData => ", formData);
+
   const onSubmit = (data: any) => {
-    // * Here we're updating the formData local state so that we apply for the vendor at the end.
-    // ? We're using react hook form to collect the input data and update the formData state
     onChange(data);
     onNext();
   };
@@ -55,8 +68,8 @@ const Step2StoreDetails: React.FC<Step2StoreDetailsProps> = ({
     <div className="bg-white p-8 rounded-lg shadow-lg">
       <h2 className="text-2xl font-bold text-gray-900 mb-4">Store Details</h2>
       <p className="text-gray-600 mb-6">
-        Provide information about your store to create a unique presence on our
-        platform.
+        Provide information about your store and verification documents to
+        create a unique presence on our platform.
       </p>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <Input
@@ -73,12 +86,13 @@ const Step2StoreDetails: React.FC<Step2StoreDetailsProps> = ({
           placeholder="Describe your store..."
           error={errors.description?.message}
         />
-        <Input
+        <ImageUploader
           control={control}
-          name="logo"
-          label="Logo URL"
-          placeholder="https://example.com/logo.png"
-          error={errors.logo?.message}
+          errors={errors}
+          watch={watch}
+          setValue={setValue}
+          label="Store Logo"
+          name="logoFiles"
         />
         <Input
           control={control}
@@ -87,6 +101,20 @@ const Step2StoreDetails: React.FC<Step2StoreDetailsProps> = ({
           placeholder="contact@yourstore.com"
           icon={Mail}
           error={errors.contact?.message}
+        />
+        <Input
+          control={control}
+          name="businessDetails.taxId"
+          label="Tax ID"
+          placeholder="Enter your tax ID"
+          error={errors.businessDetails?.taxId?.message}
+        />
+        <Input
+          control={control}
+          name="businessDetails.businessLicense"
+          label="Business License"
+          placeholder="Enter your business license number"
+          error={errors.businessDetails?.businessLicense?.message}
         />
         <div className="flex justify-between">
           <button

@@ -9,17 +9,17 @@ interface Step1IntroProps {
 const Step1Intro: React.FC<Step1IntroProps> = ({ onNext }) => {
   const benefits = [
     {
-      icon: <Store size={24} className="text-teal-500" />,
+      icon: <Store size={24} className="text-indigo-500" />,
       title: "Your Own Store",
       description: "Create a unique storefront to showcase your products.",
     },
     {
-      icon: <Package size={24} className="text-teal-500" />,
+      icon: <Package size={24} className="text-indigo-500" />,
       title: "Manage Inventory",
       description: "Easily add, update, and track your product inventory.",
     },
     {
-      icon: <DollarSign size={24} className="text-teal-500" />,
+      icon: <DollarSign size={24} className="text-indigo-500" />,
       title: "Earn Money",
       description: "Reach a wide audience and grow your revenue.",
     },
@@ -52,7 +52,7 @@ const Step1Intro: React.FC<Step1IntroProps> = ({ onNext }) => {
       <div className="flex justify-end">
         <button
           onClick={onNext}
-          className="bg-teal-500 text-white px-6 py-2 rounded-md hover:bg-teal-600 transition-colors"
+          className="bg-indigo-500 text-white px-6 py-2 rounded-md hover:bg-indigo-600 transition-colors"
         >
           Get Started
         </button>

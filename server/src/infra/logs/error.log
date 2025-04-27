@@ -1423,3 +1423,4 @@ Foreign key constraint violated: `Interaction_productId_fkey (index)`
 [2025-04-27T14:51:08.631Z] [31MERROR[39M: Email or password is incorrect.
 [2025-04-27T15:17:40.672Z] [31MERROR[39M: Invalid access token, please log in
 [2025-04-27T15:24:12.304Z] [31MERROR[39M: You are not authorized to perform this action
+[2025-04-27T15:47:09.555Z] [31MERROR[39M: Invalid access token, please log in

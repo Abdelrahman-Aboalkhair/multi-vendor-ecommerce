@@ -39,9 +39,19 @@ export const authApi = apiSlice.injectEndpoints({
       },
     }),
 
-    applyforVendor: builder.mutation<
-      { user: User; success: boolean },
-      FormData
+    applyForVendor: builder.mutation<
+      { vendor: any },
+      {
+        storeName: string;
+        description?: string;
+        contact?: string;
+        businessDetails?: {
+          taxId?: string;
+          businessLicense?: string;
+          otherDocuments?: string[];
+        };
+        logoFiles?: File[];
+      }
     >({
       query: (data) => ({
         url: "/auth/apply-for-vendor",
@@ -98,7 +108,7 @@ export const {
   useSignInMutation,
   useSignupMutation,
   useSignOutMutation,
-  useApplyforVendorMutation,
+  useApplyForVendorMutation,
   useVerifyEmailMutation,
   useForgotPasswordMutation,
   useResetPasswordMutation,

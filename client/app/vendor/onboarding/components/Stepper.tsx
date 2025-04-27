@@ -21,9 +21,9 @@ const Stepper: React.FC<StepperProps> = ({ steps, currentStep }) => {
             className={cn(
               "flex items-center justify-center w-10 h-10 rounded-full border-2",
               currentStep > step.id
-                ? "bg-teal-500 border-teal-500 text-white"
+                ? "bg-indigo-500 border-indigo-500 text-white"
                 : currentStep === step.id
-                ? "border-teal-500 text-teal-500"
+                ? "border-indigo-500 text-indigo-500"
                 : "border-gray-300 text-gray-400"
             )}
           >
@@ -47,7 +47,7 @@ const Stepper: React.FC<StepperProps> = ({ steps, currentStep }) => {
             <div
               className={cn(
                 "flex-1 h-1 mx-4",
-                currentStep > step.id ? "bg-teal-500" : "bg-gray-200"
+                currentStep > step.id ? "bg-indigo-500" : "bg-gray-200"
               )}
             />
           )}

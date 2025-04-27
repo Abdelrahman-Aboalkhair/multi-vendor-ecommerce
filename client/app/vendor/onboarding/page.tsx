@@ -7,8 +7,8 @@ import Step2StoreDetails from "./components/Step2StoreDetails";
 import Step3Confirmation from "./components/Step3Confirmation";
 import Step4Success from "./components/Step4Success";
 import OnboardingLayout from "./components/OnboardingLayout";
-import { useApplyforVendorMutation } from "@/app/store/apis/AuthApi";
 import useToast from "@/app/hooks/ui/useToast";
+import { useApplyForVendorMutation } from "@/app/store/apis/AuthApi";
 
 const steps = [
   { label: "Introduction", id: 1 },
@@ -18,15 +18,20 @@ const steps = [
 ];
 
 const VendorOnboarding = () => {
+  const { showToast } = useToast();
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
     storeName: "",
     description: "",
-    logo: "",
     contact: "",
+    businessDetails: {
+      taxId: "",
+      businessLicense: "",
+      otherDocuments: [],
+    },
+    logoFiles: [],
   });
-  const [applyForVendor, { isLoading }] = useApplyforVendorMutation();
-  const { showToast } = useToast();
+  const [applyForVendor, { isLoading }] = useApplyForVendorMutation();
 
   const handleNext = () => {
     if (currentStep < steps.length) {
@@ -41,16 +46,35 @@ const VendorOnboarding = () => {
   };
 
   const handleFormChange = (data: any) => {
-    setFormData((prev) => ({ ...prev, ...data }));
+    console.log("incoming data => ", data);
+    setFormData((prev) => ({
+      ...prev,
+      ...data,
+      businessDetails: {
+        ...prev.businessDetails,
+        ...(data.businessDetails || {}),
+      },
+    }));
   };
 
   const handleSubmit = async () => {
+    const submissionData = new FormData();
+    submissionData.append("storeName", formData.storeName);
+    submissionData.append("description", formData.description || "");
+    submissionData.append("contact", formData.contact || "");
+    submissionData.append(
+      "businessDetails",
+      JSON.stringify(formData.businessDetails)
+    );
+    formData.logoFiles.forEach((file, index) => {
+      submissionData.append(`logoFiles[${index}]`, file);
+    });
     try {
-      await applyForVendor(formData).unwrap();
+      await applyForVendor(submissionData).unwrap();
       setCurrentStep(4);
       showToast("Application submitted successfully", "success");
     } catch (err: any) {
-      showToast("Something went wrong", "error");
+      showToast("Failed to submit application", "error");
     }
   };
 

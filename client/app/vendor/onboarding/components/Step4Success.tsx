@@ -12,7 +12,7 @@ const Step4Success: React.FC = () => {
         transition={{ duration: 0.5 }}
         className="flex justify-center mb-6"
       >
-        <CheckCircle2 size={64} className="text-teal-500" />
+        <CheckCircle2 size={64} className="text-indigo-500" />
       </motion.div>
       <h2 className="text-2xl font-bold text-gray-900 mb-4">
         Application Submitted!
@@ -21,9 +21,9 @@ const Step4Success: React.FC = () => {
         Your vendor application has been submitted successfully. Our team will
         review it and get back to you within 3-5 business days.
       </p>
-      <Link href="/dashboard">
-        <button className="bg-teal-500 hover:bg-teal-600">
-          Go to Dashboard
+      <Link href="/">
+        <button className="bg-indigo-500 hover:bg-indigo-600 px-4 py-3 rounded-lg text-white">
+          Go to Home
         </button>
       </Link>
     </div>

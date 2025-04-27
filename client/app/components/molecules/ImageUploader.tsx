@@ -9,6 +9,7 @@ interface ImageUploaderProps {
   watch: any;
   setValue: any;
   label: string;
+  name: string;
   existingImages?: string[];
 }
 
@@ -18,38 +19,42 @@ const ImageUploader = ({
   watch,
   setValue,
   label,
+  name,
   existingImages,
 }: ImageUploaderProps) => {
-  const images = watch("images");
-  console.log("exisitng images => ", existingImages);
-  console.log("images => ", images);
-  const [previews, setPreviews] = useState(existingImages || []);
-  console.log("previews => ", previews);
+  const images = watch(name) || [];
+  const [previews, setPreviews] = useState<string[]>(existingImages || []);
 
   useEffect(() => {
     if (existingImages && existingImages.length > 0) {
       setPreviews(existingImages);
     } else if (images && images.length > 0) {
-      // If images are URLs (strings), use them directly; otherwise, create previews
-      const newPreviews = images.map((img) =>
+      const newPreviews = images.map((img: any) =>
         typeof img === "string" ? img : URL.createObjectURL(img)
       );
       setPreviews(newPreviews);
     } else {
       setPreviews([]);
     }
+
+    // Cleanup object URLs to prevent memory leaks
+    return () => {
+      previews.forEach((preview) => {
+        if (preview.startsWith("blob:")) {
+          URL.revokeObjectURL(preview);
+        }
+      });
+    };
   }, [existingImages, images]);
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
     if (!files.length) return;
 
-    // Generate previews for display
     const newPreviews = files.map((file: any) => URL.createObjectURL(file));
     setPreviews((prev) => [...prev, ...newPreviews]);
 
-    // Update form images (store File objects)
-    setValue("images", [...images, ...files]);
+    setValue(name, [...images, ...files]);
   };
 
   const removeImage = (index: number) => {
@@ -57,7 +62,7 @@ const ImageUploader = ({
     const newPreviews = [...previews];
     newImages.splice(index, 1);
     newPreviews.splice(index, 1);
-    setValue("images", newImages);
+    setValue(name, newImages);
     setPreviews(newPreviews);
   };
 
@@ -94,7 +99,7 @@ const ImageUploader = ({
       )}
 
       <Controller
-        name="images"
+        name={name}
         control={control}
         render={() => (
           <div className="relative mb-3">
@@ -113,8 +118,8 @@ const ImageUploader = ({
         )}
       />
 
-      {errors.images && (
-        <p className="text-red-500 text-xs mt-1">{errors.images.message}</p>
+      {errors[name] && (
+        <p className="text-red-500 text-xs mt-1">{errors[name].message}</p>
       )}
     </div>
   );

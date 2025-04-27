@@ -48,7 +48,7 @@ export class VendorRepository {
     });
   }
 
-  async create(data: Omit<Vendor, "id" | "createdAt" | "updatedAt">) {
+  async create(data: any) {
     return this.prisma.vendor.create({
       data,
       include: { user: true },
