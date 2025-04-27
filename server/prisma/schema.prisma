@@ -84,7 +84,7 @@ model Vendor {
   storeName     String          @unique
   slug          String          @unique
   description   String?
-  logo          String?
+  logoFiles          String[]
   contact       String?
   businessDetails Json?
   status        VENDOR_STATUS   @default(PENDING)

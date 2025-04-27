@@ -66,8 +66,8 @@ const VendorOnboarding = () => {
       "businessDetails",
       JSON.stringify(formData.businessDetails)
     );
-    formData.logoFiles.forEach((file, index) => {
-      submissionData.append(`logoFiles[${index}]`, file);
+    formData.logoFiles.forEach((file) => {
+      submissionData.append(`logoFiles`, file);
     });
     try {
       await applyForVendor(submissionData).unwrap();

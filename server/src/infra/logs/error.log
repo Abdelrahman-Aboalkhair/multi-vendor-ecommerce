@@ -1424,3 +1424,17 @@ Foreign key constraint violated: `Interaction_productId_fkey (index)`
 [2025-04-27T15:17:40.672Z] [31MERROR[39M: Invalid access token, please log in
 [2025-04-27T15:24:12.304Z] [31MERROR[39M: You are not authorized to perform this action
 [2025-04-27T15:47:09.555Z] [31MERROR[39M: Invalid access token, please log in
+[2025-04-27T16:08:44.044Z] [31MERROR[39M: Unexpected field
+[2025-04-27T16:10:22.767Z] [31MERROR[39M: Unexpected field
+[2025-04-27T16:10:41.900Z] [31MERROR[39M: Unexpected field
+[2025-04-27T16:12:12.431Z] [31MERROR[39M: Invalid input. Please check your request data.
+[2025-04-27T16:14:13.626Z] [31MERROR[39M: 
+Invalid `this.prisma.vendor.findUnique()` invocation in
+/home/abdelrahman-aboalkhair/Projects/WEB/multi-vendor-ecommerce/server/src/modules/vendor/vendor.repository.ts:31:31
+
+  28 }
+  29 
+  30 async findByUserId(userId: string) {
+→ 31   return this.prisma.vendor.findUnique(
+Error occurred during query execution:
+ConnectorError(ConnectorError { user_facing_error: None, kind: QueryError(PostgresError { code: "0A000", message: "cached plan must not change result type", severity: "ERROR", detail: None, column: None, hint: None }), transient: false })

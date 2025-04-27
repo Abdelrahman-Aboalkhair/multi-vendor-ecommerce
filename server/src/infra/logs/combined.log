@@ -11111,3 +11111,51 @@ Foreign key constraint violated: `Interaction_productId_fkey (index)`
 [2025-04-27T16:03:01.745Z] [32MINFO[39M: ::1 - - [27/Apr/2025:16:03:01 +0000] "POST /api/v1/auth/apply-for-vendor HTTP/1.1" 201 986 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
 [2025-04-27T16:03:48.412Z] [32MINFO[39M: ::1 - - [27/Apr/2025:16:03:48 +0000] "GET /api/v1/users/me HTTP/1.1" 200 137 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
 [2025-04-27T16:03:48.417Z] [32MINFO[39M: ::1 - - [27/Apr/2025:16:03:48 +0000] "GET /api/v1/cart/count HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+[2025-04-27T16:07:39.926Z] [32MINFO[39M: ::1 - - [27/Apr/2025:16:07:39 +0000] "GET /api/v1/auth/sign-out HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+[2025-04-27T16:07:41.909Z] [32MINFO[39M: ::1 - - [27/Apr/2025:16:07:41 +0000] "GET /api/v1/cart/count HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+[2025-04-27T16:07:41.930Z] [32MINFO[39M: ::1 - - [27/Apr/2025:16:07:41 +0000] "POST /api/v1/graphql HTTP/1.1" 200 27 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+[2025-04-27T16:07:41.940Z] [32MINFO[39M: ::1 - - [27/Apr/2025:16:07:41 +0000] "POST /api/v1/graphql HTTP/1.1" 200 77 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+[2025-04-27T16:08:11.248Z] [32MINFO[39M: ::1 - - [27/Apr/2025:16:08:11 +0000] "POST /api/v1/auth/register HTTP/1.1" 201 152 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+[2025-04-27T16:08:11.576Z] [32MINFO[39M: ::1 - - [27/Apr/2025:16:08:11 +0000] "POST /api/v1/graphql HTTP/1.1" 200 77 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+[2025-04-27T16:08:11.582Z] [32MINFO[39M: ::1 - - [27/Apr/2025:16:08:11 +0000] "POST /api/v1/graphql HTTP/1.1" 200 72 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+[2025-04-27T16:08:11.588Z] [32MINFO[39M: ::1 - - [27/Apr/2025:16:08:11 +0000] "POST /api/v1/graphql HTTP/1.1" 200 77 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+[2025-04-27T16:08:11.591Z] [32MINFO[39M: ::1 - - [27/Apr/2025:16:08:11 +0000] "POST /api/v1/graphql HTTP/1.1" 200 79 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+[2025-04-27T16:08:11.615Z] [32MINFO[39M: ::1 - - [27/Apr/2025:16:08:11 +0000] "GET /api/v1/users/me HTTP/1.1" 200 135 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+[2025-04-27T16:08:44.044Z] [31MERROR[39M: Unexpected field
+[2025-04-27T16:08:44.100Z] [32MINFO[39M: ::1 - - [27/Apr/2025:16:08:44 +0000] "POST /api/v1/auth/apply-for-vendor HTTP/1.1" 500 - "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+[2025-04-27T16:10:22.767Z] [31MERROR[39M: Unexpected field
+[2025-04-27T16:10:22.825Z] [32MINFO[39M: ::1 - - [27/Apr/2025:16:10:22 +0000] "POST /api/v1/auth/apply-for-vendor HTTP/1.1" 500 - "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+[2025-04-27T16:10:41.900Z] [31MERROR[39M: Unexpected field
+[2025-04-27T16:10:41.982Z] [32MINFO[39M: ::1 - - [27/Apr/2025:16:10:41 +0000] "POST /api/v1/auth/apply-for-vendor HTTP/1.1" 500 - "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+[2025-04-27T16:12:12.431Z] [31MERROR[39M: Invalid input. Please check your request data.
+[2025-04-27T16:12:12.440Z] [32MINFO[39M: ::1 - - [27/Apr/2025:16:12:12 +0000] "POST /api/v1/auth/apply-for-vendor HTTP/1.1" 400 - "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+[2025-04-27T16:14:13.626Z] [31MERROR[39M: 
+Invalid `this.prisma.vendor.findUnique()` invocation in
+/home/abdelrahman-aboalkhair/Projects/WEB/multi-vendor-ecommerce/server/src/modules/vendor/vendor.repository.ts:31:31
+
+  28 }
+  29 
+  30 async findByUserId(userId: string) {
+→ 31   return this.prisma.vendor.findUnique(
+Error occurred during query execution:
+ConnectorError(ConnectorError { user_facing_error: None, kind: QueryError(PostgresError { code: "0A000", message: "cached plan must not change result type", severity: "ERROR", detail: None, column: None, hint: None }), transient: false })
+[2025-04-27T16:14:13.636Z] [32MINFO[39M: ::1 - - [27/Apr/2025:16:14:13 +0000] "POST /api/v1/auth/apply-for-vendor HTTP/1.1" 500 - "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+[2025-04-27T16:15:02.484Z] [32MINFO[39M: ::1 - - [27/Apr/2025:16:15:02 +0000] "POST /api/v1/graphql HTTP/1.1" 200 27 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+[2025-04-27T16:15:02.498Z] [32MINFO[39M: ::1 - - [27/Apr/2025:16:15:02 +0000] "POST /api/v1/graphql HTTP/1.1" 200 77 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+[2025-04-27T16:15:02.498Z] [32MINFO[39M: ::1 - - [27/Apr/2025:16:15:02 +0000] "POST /api/v1/graphql HTTP/1.1" 200 79 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+[2025-04-27T16:15:02.507Z] [32MINFO[39M: ::1 - - [27/Apr/2025:16:15:02 +0000] "POST /api/v1/graphql HTTP/1.1" 200 77 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+[2025-04-27T16:15:02.507Z] [32MINFO[39M: ::1 - - [27/Apr/2025:16:15:02 +0000] "POST /api/v1/graphql HTTP/1.1" 200 77 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+[2025-04-27T16:15:02.508Z] [32MINFO[39M: ::1 - - [27/Apr/2025:16:15:02 +0000] "POST /api/v1/graphql HTTP/1.1" 200 72 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+[2025-04-27T16:15:02.527Z] [32MINFO[39M: ::1 - - [27/Apr/2025:16:15:02 +0000] "GET /api/v1/users/me HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+[2025-04-27T16:15:02.542Z] [32MINFO[39M: ::1 - - [27/Apr/2025:16:15:02 +0000] "GET /api/v1/cart/count HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+[2025-04-27T16:15:04.436Z] [32MINFO[39M: ::1 - - [27/Apr/2025:16:15:04 +0000] "GET /api/v1/auth/sign-out HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+[2025-04-27T16:15:06.421Z] [32MINFO[39M: ::1 - - [27/Apr/2025:16:15:06 +0000] "POST /api/v1/graphql HTTP/1.1" 200 27 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+[2025-04-27T16:15:06.426Z] [32MINFO[39M: ::1 - - [27/Apr/2025:16:15:06 +0000] "POST /api/v1/graphql HTTP/1.1" 200 77 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+[2025-04-27T16:15:06.487Z] [32MINFO[39M: ::1 - - [27/Apr/2025:16:15:06 +0000] "GET /api/v1/cart/count HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+[2025-04-27T16:15:33.939Z] [32MINFO[39M: ::1 - - [27/Apr/2025:16:15:33 +0000] "POST /api/v1/auth/register HTTP/1.1" 201 152 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+[2025-04-27T16:15:34.355Z] [32MINFO[39M: ::1 - - [27/Apr/2025:16:15:34 +0000] "GET /api/v1/users/me HTTP/1.1" 200 135 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+[2025-04-27T16:15:34.356Z] [32MINFO[39M: ::1 - - [27/Apr/2025:16:15:34 +0000] "POST /api/v1/graphql HTTP/1.1" 200 77 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+[2025-04-27T16:15:34.366Z] [32MINFO[39M: ::1 - - [27/Apr/2025:16:15:34 +0000] "POST /api/v1/graphql HTTP/1.1" 200 72 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+[2025-04-27T16:15:34.367Z] [32MINFO[39M: ::1 - - [27/Apr/2025:16:15:34 +0000] "POST /api/v1/graphql HTTP/1.1" 200 77 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+[2025-04-27T16:15:34.371Z] [32MINFO[39M: ::1 - - [27/Apr/2025:16:15:34 +0000] "POST /api/v1/graphql HTTP/1.1" 200 79 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+[2025-04-27T16:15:56.698Z] [32MINFO[39M: ::1 - - [27/Apr/2025:16:15:56 +0000] "POST /api/v1/auth/apply-for-vendor HTTP/1.1" 201 - "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"

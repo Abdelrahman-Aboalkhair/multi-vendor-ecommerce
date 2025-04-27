@@ -250,7 +250,7 @@ export class AuthController {
       const vendorData = req.body;
       const vendor = await this.authService.applyForVendor(userId, {
         ...vendorData,
-        logos: logoUrls.length > 0 ? logoUrls : undefined,
+        logoFiles: logoUrls.length > 0 ? logoUrls : undefined,
       });
 
       sendResponse(res, 201, {

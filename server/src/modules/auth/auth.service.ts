@@ -280,7 +280,7 @@ export class AuthService {
         businessLicense?: string;
         otherDocuments?: string[];
       };
-      logos?: string[];
+      logoFiles?: string[];
     }
   ) {
     const existingVendor = await this.vendorRepository.findByUserId(userId);
@@ -311,7 +311,7 @@ export class AuthService {
       storeName: vendorData.storeName,
       slug,
       description: vendorData.description,
-      logo: "",
+      logoFiles: vendorData.logoFiles,
       contact: vendorData.contact,
       status: VENDOR_STATUS.PENDING,
       businessDetails: vendorData.businessDetails || {},
