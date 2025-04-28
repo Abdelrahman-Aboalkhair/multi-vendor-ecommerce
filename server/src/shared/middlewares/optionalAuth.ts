@@ -8,7 +8,7 @@ const optionalAuth = async (
   res: Response,
   next: NextFunction
 ): Promise<void> => {
-  const accessToken = req.cookies.accessToken;
+  const accessToken = req.headers.authorization?.split(" ")[1];
 
   if (!accessToken) {
     return next();

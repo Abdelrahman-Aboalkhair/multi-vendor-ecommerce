@@ -14,10 +14,12 @@ type ProductUpdateData = Partial<{
   images: string[];
   stock: number;
   categoryId?: string;
+  vendorId?: string;
 }>;
 
 export class ProductService {
   constructor(private productRepository: ProductRepository) {}
+
   async getAllProducts(queryString: Record<string, any>) {
     const apiFeatures = new ApiFeatures(queryString)
       .filter()
@@ -28,7 +30,10 @@ export class ProductService {
 
     const { where, orderBy, skip, take, select } = apiFeatures;
 
-    const finalWhere = where && Object.keys(where).length > 0 ? where : {};
+    const finalWhere = {
+      ...where,
+      ...(queryString.vendorId && { vendorId: queryString.vendorId }),
+    };
 
     const totalResults = await this.productRepository.countProducts({
       where: finalWhere,
@@ -54,22 +59,6 @@ export class ProductService {
     };
   }
 
-  async getProductById(productId: string) {
-    const product = await this.productRepository.findProductById(productId);
-    if (!product) {
-      throw new AppError(404, "Product not found");
-    }
-    return product;
-  }
-
-  async getProductBySlug(productSlug: string) {
-    const product = await this.productRepository.findProductBySlug(productSlug);
-    if (!product) {
-      throw new AppError(404, "Product not found");
-    }
-    return product;
-  }
-
   async createProduct(data: {
     name: string;
     sku: string;
@@ -84,45 +73,21 @@ export class ProductService {
     images?: string[];
     stock: number;
     categoryId?: string;
+    vendorId?: string;
   }) {
+    if (data.vendorId) {
+      const vendor = await prisma.vendor.findUnique({
+        where: { userId: data.vendorId },
+      });
+      if (!vendor) {
+        throw new AppError(400, "Invalid vendor ID");
+      }
+    }
     const product = await this.productRepository.createProduct(data);
     return { product };
   }
 
-  async restockProduct(
-    productId: string,
-    quantity: number,
-    notes?: string,
-    userId?: string
-  ) {
-    // Validate quantity
-    if (quantity <= 0) {
-      throw new Error("Quantity must be positive");
-    }
-
-    // Create restock record
-    const restock = await this.productRepository.createRestock({
-      productId,
-      quantity,
-      notes,
-      userId,
-    });
-
-    // Update product stock
-    await this.productRepository.updateProductStock(productId, quantity);
-
-    // Log stock movement
-    await this.productRepository.createStockMovement({
-      productId,
-      quantity,
-      reason: "restock",
-      userId,
-    });
-
-    return restock;
-  }
-
-  async bulkCreateProducts(file: Express.Multer.File) {
+  async bulkCreateProducts(file: Express.Multer.File, vendorId?: string) {
     if (!file) {
       throw new AppError(400, "No file uploaded");
     }
@@ -152,9 +117,7 @@ export class ProductService {
     if (records.length === 0) {
       throw new AppError(400, "File is empty");
     }
-    console.log("RECORDS => ", records);
 
-    // Validate and transform records
     const products = records.map((record) => {
       if (!record.name || !record.price || !record.stock) {
         throw new AppError(400, `Invalid record: ${JSON.stringify(record)}`);
@@ -175,6 +138,7 @@ export class ProductService {
           : [],
         stock: Number(record.stock),
         categoryId: record.categoryId ? String(record.categoryId) : undefined,
+        vendorId,
         isNew: record.isNew ? Boolean(record.isNew) : false,
         isTrending: record.isTrending ? Boolean(record.isTrending) : false,
         isBestSeller: record.isBestSeller
@@ -184,14 +148,21 @@ export class ProductService {
       };
     });
 
-    // Validate categoryIds (if provided)
+    if (vendorId) {
+      const vendor = await prisma.vendor.findUnique({
+        where: { userId: vendorId },
+      });
+      if (!vendor) {
+        throw new AppError(400, "Invalid vendor ID");
+      }
+    }
+
     const categoryIds = products
       .filter((p) => p.categoryId)
       .map((p) => p.categoryId!);
     if (categoryIds.length > 0) {
       const existingCategories = await prisma.category.findMany({
         where: { id: { in: categoryIds } },
-        select: { id: true },
       });
       const validCategoryIds = new Set(existingCategories.map((c) => c.id));
       for (const product of products) {
@@ -201,18 +172,24 @@ export class ProductService {
       }
     }
 
-    // Create products
     await this.productRepository.createManyProducts(products);
 
     return { count: products.length };
   }
 
-  async updateProduct(productId: string, updatedData: ProductUpdateData) {
+  async updateProduct(
+    productId: string,
+    updatedData: ProductUpdateData,
+    vendorId?: string
+  ) {
     const existingProduct = await this.productRepository.findProductById(
       productId
     );
     if (!existingProduct) {
       throw new AppError(404, "Product not found");
+    }
+    if (vendorId && existingProduct.vendorId !== vendorId) {
+      throw new AppError(403, "Not authorized to update this product");
     }
 
     const product = await this.productRepository.updateProduct(
@@ -222,10 +199,13 @@ export class ProductService {
     return product;
   }
 
-  async deleteProduct(productId: string) {
+  async deleteProduct(productId: string, vendorId?: string) {
     const product = await this.productRepository.findProductById(productId);
     if (!product) {
       throw new AppError(404, "Product not found");
+    }
+    if (vendorId && product.vendorId !== vendorId) {
+      throw new AppError(403, "Not authorized to delete this product");
     }
 
     await this.productRepository.deleteProduct(productId);

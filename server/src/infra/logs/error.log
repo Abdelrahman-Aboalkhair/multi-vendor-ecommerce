@@ -1438,3 +1438,7 @@ Invalid `this.prisma.vendor.findUnique()` invocation in
 → 31   return this.prisma.vendor.findUnique(
 Error occurred during query execution:
 ConnectorError(ConnectorError { user_facing_error: None, kind: QueryError(PostgresError { code: "0A000", message: "cached plan must not change result type", severity: "ERROR", detail: None, column: None, hint: None }), transient: false })
+[2025-04-27T18:02:25.598Z] [31MERROR[39M: Invalid access token, please log in
+[2025-04-27T21:53:45.759Z] [31MERROR[39M: Invalid access token, please log in
+[2025-04-27T21:55:09.780Z] [31MERROR[39M: No orders found for this user
+[2025-04-28T16:36:52.437Z] [31MERROR[39M: Email or password is incorrect.

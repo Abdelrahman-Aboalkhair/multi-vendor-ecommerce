@@ -50,7 +50,6 @@ const SearchBar: React.FC<SearchBarProps> = ({
 
   // Fetch categories
   const { data: categoriesData } = useQuery(GET_CATEGORIES);
-  console.log("categoriesData: ", categoriesData);
   const suggestedCategories =
     categoriesData?.categories.map((cat: any) => cat.name) || [];
 
@@ -58,7 +57,6 @@ const SearchBar: React.FC<SearchBarProps> = ({
     variables: { first: 4, skip: 0 },
   });
   const trendingProducts = trendingProductsData?.trendingProducts?.products;
-  console.log("trendingProductsData: ", trendingProductsData);
 
   useEventListener("mousedown", (event) => {
     if (

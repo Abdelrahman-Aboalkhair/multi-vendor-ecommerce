@@ -9,50 +9,74 @@ interface Step1IntroProps {
 const Step1Intro: React.FC<Step1IntroProps> = ({ onNext }) => {
   const benefits = [
     {
-      icon: <Store size={24} className="text-indigo-500" />,
+      icon: <Store className="text-indigo-600" />,
       title: "Your Own Store",
       description: "Create a unique storefront to showcase your products.",
     },
     {
-      icon: <Package size={24} className="text-indigo-500" />,
+      icon: <Package className="text-indigo-600" />,
       title: "Manage Inventory",
       description: "Easily add, update, and track your product inventory.",
     },
     {
-      icon: <DollarSign size={24} className="text-indigo-500" />,
+      icon: <DollarSign className="text-indigo-600" />,
       title: "Earn Money",
       description: "Reach a wide audience and grow your revenue.",
     },
   ];
 
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+      },
+    },
+  };
+
+  const item = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0 },
+  };
+
   return (
-    <div className="bg-white p-8 rounded-lg shadow-lg">
-      <h2 className="text-2xl font-bold text-gray-900 mb-4">Become a Vendor</h2>
-      <p className="text-gray-600 mb-6">
-        Join our platform to start selling your products to a global audience.
-        Set up your store in just a few steps!
+    <div className="bg-white p-6 sm:p-8 rounded-xl shadow-lg border border-gray-100">
+      <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3">
+        Become a Vendor
+      </h2>
+      <p className="text-gray-600 mb-8">
+        Join our marketplace to start selling your products to customers
+        worldwide. Complete this simple process to launch your store in minutes.
       </p>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+
+      <motion.div
+        className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8"
+        variants={container}
+        initial="hidden"
+        animate="show"
+      >
         {benefits.map((benefit, index) => (
           <motion.div
             key={index}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.2 }}
-            className="flex flex-col items-center text-center"
+            variants={item}
+            className="flex flex-col items-center p-4 text-center rounded-lg bg-gray-50 hover:bg-indigo-50 transition-colors"
           >
-            <div className="mb-2">{benefit.icon}</div>
-            <h3 className="text-lg font-semibold text-gray-900">
+            <div className="p-3 bg-indigo-100 rounded-full mb-4">
+              {benefit.icon}
+            </div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">
               {benefit.title}
             </h3>
             <p className="text-sm text-gray-600">{benefit.description}</p>
           </motion.div>
         ))}
-      </div>
+      </motion.div>
+
       <div className="flex justify-end">
         <button
           onClick={onNext}
-          className="bg-indigo-500 text-white px-6 py-2 rounded-md hover:bg-indigo-600 transition-colors"
+          className="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition-colors shadow-md hover:shadow-lg focus:ring-2 focus:ring-indigo-200 focus:outline-none"
         >
           Get Started
         </button>

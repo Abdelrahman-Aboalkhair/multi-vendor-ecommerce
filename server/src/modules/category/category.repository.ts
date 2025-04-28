@@ -13,18 +13,26 @@ export class CategoryRepository {
       orderBy,
       skip,
       take,
+      include: { vendor: true },
     });
   }
 
-  async createCategory(data: { name: string; slug: string }) {
+  async createCategory(data: {
+    name: string;
+    slug: string;
+    images?: string[];
+    vendorId?: string;
+  }) {
     return prisma.category.create({
       data,
+      include: { vendor: true },
     });
   }
 
   async findCategoryById(id: string) {
     return prisma.category.findUnique({
       where: { id },
+      include: { vendor: true },
     });
   }
 

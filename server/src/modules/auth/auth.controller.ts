@@ -32,7 +32,6 @@ export class AuthController {
         });
 
       res.cookie("refreshToken", refreshToken, cookieOptions);
-      res.cookie("accessToken", accessToken, cookieOptions);
 
       const userId = user.id;
       const sessionId = req.session.id;
@@ -42,6 +41,7 @@ export class AuthController {
       sendResponse(res, 201, {
         message: "User registered successfully",
         data: {
+          accessToken,
           user: {
             id: user.id,
             name: user.name,
@@ -99,7 +99,6 @@ export class AuthController {
     });
 
     res.cookie("refreshToken", refreshToken, cookieOptions);
-    res.cookie("accessToken", accessToken, cookieOptions);
 
     const userId = user.id;
     const sessionId = req.session.id;
@@ -107,6 +106,7 @@ export class AuthController {
 
     sendResponse(res, 200, {
       data: {
+        accessToken,
         user: {
           id: user.id,
           name: user.name,
@@ -127,7 +127,6 @@ export class AuthController {
 
   signout = asyncHandler(async (req: Request, res: Response): Promise<void> => {
     const refreshToken = req?.cookies?.refreshToken;
-    const accessToken = req?.cookies?.accessToken;
     const userId = req.user?.id;
 
     if (refreshToken) {
@@ -141,19 +140,7 @@ export class AuthController {
       }
     }
 
-    if (accessToken) {
-      const decoded: any = jwt.decode(accessToken);
-      if (decoded && decoded.exp) {
-        const now = Math.floor(Date.now() / 1000);
-        const ttl = decoded.exp - now;
-        if (ttl > 0) {
-          await tokenUtils.blacklistToken(accessToken, ttl);
-        }
-      }
-    }
-
     res.clearCookie("refreshToken", clearCookieOptions);
-    res.clearCookie("accessToken", clearCookieOptions);
 
     sendResponse(res, 200, { message: "Logged out successfully" });
     const start = Date.now();
@@ -199,6 +186,7 @@ export class AuthController {
   refreshToken = asyncHandler(
     async (req: Request, res: Response): Promise<void> => {
       const oldRefreshToken = req?.cookies?.refreshToken;
+      console.log("old refresh token => ", oldRefreshToken);
 
       if (!oldRefreshToken) {
         throw new AppError(401, "Refresh token not found");
@@ -208,11 +196,11 @@ export class AuthController {
         await this.authService.refreshToken(oldRefreshToken);
 
       res.cookie("refreshToken", newRefreshToken, cookieOptions);
-      res.cookie("accessToken", newAccessToken, cookieOptions);
 
       sendResponse(res, 200, {
         message: "Token refreshed successfully",
         data: {
+          accessToken: newAccessToken,
           user: {
             id: user.id,
             name: user.name,

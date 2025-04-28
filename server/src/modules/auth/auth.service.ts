@@ -13,7 +13,6 @@ import { VendorRepository } from "../vendor/vendor.repository";
 import BadRequestError from "@/shared/errors/BadRequestError";
 import NotFoundError from "@/shared/errors/NotFoundError";
 import slugify from "@/shared/utils/slugify";
-import { uploadToCloudinary } from "@/shared/utils/uploadToCloudinary";
 
 export class AuthService {
   constructor(

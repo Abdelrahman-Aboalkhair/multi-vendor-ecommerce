@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Product } from "@/app/types/productTypes";
 import { motion } from "framer-motion";
 import { Package } from "lucide-react";
@@ -27,18 +27,25 @@ const ProductSection: React.FC<ProductSectionProps> = ({
 
   const { data, loading, error, fetchMore } = useQuery(query, {
     variables: { first: pageSize, skip: 0 },
-    onCompleted: (data) => {
-      const products = data
-        ? data.products?.products ||
-          data.newProducts?.products ||
-          data.featuredProducts?.products ||
-          data.trendingProducts?.products ||
-          data.bestSellerProducts?.products
-        : [];
+  });
+
+  useEffect(() => {
+    let isMounted = true;
+    if (data && isMounted) {
+      const products =
+        data.products?.products ||
+        data.newProducts?.products ||
+        data.featuredProducts?.products ||
+        data.trendingProducts?.products ||
+        data.bestSellerProducts?.products ||
+        [];
       setDisplayedProducts(products);
       setHasMore(data?.[Object.keys(data)[0]]?.hasMore || false);
-    },
-  });
+    }
+    return () => {
+      isMounted = false;
+    };
+  }, [data]);
 
   console.log("data => ", data);
 

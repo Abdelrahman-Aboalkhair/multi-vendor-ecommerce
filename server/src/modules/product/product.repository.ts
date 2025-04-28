@@ -3,7 +3,10 @@ import prisma from "@/infra/database/database.config";
 
 export class ProductRepository {
   async findManyProducts(params: {
-    where?: Prisma.ProductWhereInput & { categorySlug?: string };
+    where?: Prisma.ProductWhereInput & {
+      categorySlug?: string;
+      vendorId?: string;
+    };
     orderBy?:
       | Prisma.ProductOrderByWithRelationInput
       | Prisma.ProductOrderByWithRelationInput[];
@@ -19,7 +22,7 @@ export class ProductRepository {
       select,
     } = params;
 
-    const { categorySlug, ...restWhere } = where;
+    const { categorySlug, vendorId, ...restWhere } = where;
 
     const finalWhere: Prisma.ProductWhereInput = {
       ...restWhere,
@@ -35,6 +38,13 @@ export class ProductRepository {
             },
           }
         : {}),
+      ...(vendorId
+        ? {
+            vendorId: {
+              equals: vendorId,
+            },
+          }
+        : {}),
     };
 
     return prisma.product.findMany({
@@ -43,75 +53,22 @@ export class ProductRepository {
       skip,
       take,
       select,
-    });
-  }
-
-  async countProducts(params: { where?: Prisma.ProductWhereInput }) {
-    const { where = {} } = params;
-
-    return prisma.product.count({
-      where,
-    });
-  }
-
-  async createRestock(data: {
-    productId: string;
-    quantity: number;
-    notes?: string;
-    userId?: string;
-  }) {
-    return prisma.restock.create({
-      data,
-      include: { product: true },
-    });
-  }
-
-  async updateProductStock(productId: string, quantity: number) {
-    return prisma.product.update({
-      where: { id: productId },
-      data: { stock: { increment: quantity } },
-    });
-  }
-
-  async createStockMovement(data: {
-    productId: string;
-    quantity: number;
-    reason: string;
-    userId?: string;
-  }) {
-    return prisma.stockMovement.create({
-      data,
+      include: { category: true, vendor: true },
     });
   }
 
   async findProductById(id: string) {
     return prisma.product.findUnique({
       where: { id },
-      include: { category: true },
-    });
-  }
-
-  async findProductByName(name: string) {
-    return prisma.product.findUnique({
-      where: { name },
-      select: {
-        sku: true,
-        price: true,
-        images: true,
-        slug: true,
-      },
+      include: { category: true, vendor: true },
     });
   }
 
   async findProductBySlug(slug: string) {
     return prisma.product.findUnique({
       where: { slug },
+      include: { category: true, vendor: true },
     });
-  }
-
-  async findProductNameById(id: string): Promise<string | null> {
-    const product = await this.findProductById(id);
-    return product?.name || null;
   }
 
   async createProduct(data: {
@@ -128,8 +85,12 @@ export class ProductRepository {
     images?: string[];
     stock: number;
     categoryId?: string;
+    vendorId?: string;
   }) {
-    return prisma.product.create({ data });
+    return prisma.product.create({
+      data,
+      include: { category: true, vendor: true },
+    });
   }
 
   async createManyProducts(
@@ -142,18 +103,12 @@ export class ProductRepository {
       images: string[];
       stock: number;
       categoryId?: string;
+      vendorId?: string;
     }[]
   ) {
     return prisma.product.createMany({
       data,
       skipDuplicates: true,
-    });
-  }
-
-  async incrementSalesCount(id: string, quantity: number) {
-    return prisma.product.update({
-      where: { id },
-      data: { salesCount: { increment: quantity } },
     });
   }
 
@@ -173,12 +128,18 @@ export class ProductRepository {
       images?: string[];
       stock: number;
       categoryId?: string;
+      vendorId?: string;
     }>
   ) {
     return prisma.product.update({
       where: { id },
       data,
+      include: { category: true, vendor: true },
     });
+  }
+
+  async countProducts(where: any) {
+    return prisma.product.count({ where });
   }
 
   async deleteProduct(id: string) {

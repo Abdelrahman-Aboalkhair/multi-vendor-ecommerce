@@ -12,13 +12,17 @@ export class ProductController {
 
   getAllProducts = asyncHandler(
     async (req: Request, res: Response): Promise<void> => {
+      const vendorId = req.query.vendorId;
       const {
         products,
         totalResults,
         totalPages,
         currentPage,
         resultsPerPage,
-      } = await this.productService.getAllProducts(req.query);
+      } = await this.productService.getAllProducts({
+        ...req.query,
+        vendorId,
+      });
       sendResponse(res, 200, {
         data: {
           products,
@@ -28,28 +32,6 @@ export class ProductController {
           resultsPerPage,
         },
         message: "Products fetched successfully",
-      });
-    }
-  );
-
-  getProductById = asyncHandler(
-    async (req: Request, res: Response): Promise<void> => {
-      const { id: productId } = req.params;
-      const product = await this.productService.getProductById(productId);
-      sendResponse(res, 200, {
-        data: product,
-        message: "Product fetched successfully",
-      });
-    }
-  );
-
-  getProductBySlug = asyncHandler(
-    async (req: Request, res: Response): Promise<void> => {
-      const { slug: productSlug } = req.params;
-      const product = await this.productService.getProductBySlug(productSlug);
-      sendResponse(res, 200, {
-        data: product,
-        message: "Product fetched successfully",
       });
     }
   );
@@ -70,6 +52,7 @@ export class ProductController {
         isBestSeller,
       } = req.body;
       const slugifiedName = slugify(name);
+      const vendorId = undefined;
 
       const formattedIsNew = isNew === "true";
       const formattedIsFeatured = isFeatured === "true";
@@ -102,6 +85,7 @@ export class ProductController {
         stock: formattedStock,
         images: imageUrls.length > 0 ? imageUrls : undefined,
         categoryId,
+        vendorId,
       });
 
       sendResponse(res, 201, {
@@ -109,31 +93,31 @@ export class ProductController {
         message: "Product created successfully",
       });
       const start = Date.now();
-      const end = Date.now();
-
       this.logsService.info("Product created", {
         userId: req.user?.id,
         sessionId: req.session.id,
-        timePeriod: end - start,
+        timePeriod: Date.now() - start,
       });
     }
   );
 
   bulkCreateProducts = asyncHandler(async (req: Request, res: Response) => {
     const file = req.file;
-    const result = await this.productService.bulkCreateProducts(file!);
+    const vendorId = undefined;
+    const result = await this.productService.bulkCreateProducts(
+      file!,
+      vendorId
+    );
 
     sendResponse(res, 201, {
       data: { count: result.count },
       message: `${result.count} products created successfully`,
     });
     const start = Date.now();
-    const end = Date.now();
-
     this.logsService.info("Bulk Products created", {
       userId: req.user?.id,
       sessionId: req.session.id,
-      timePeriod: end - start,
+      timePeriod: Date.now() - start,
     });
   });
 
@@ -153,17 +137,15 @@ export class ProductController {
         isTrending,
         isBestSeller,
       } = req.body;
-      console.log("req.body => ", req.body);
+      const vendorId = req.query.vendorId;
 
       const files = req.files as Express.Multer.File[];
-      console.log("files => ", files);
 
       const formattedIsNew = isNew === "true";
       const formattedIsFeatured = isFeatured === "true";
       const formattedIsTrending = isTrending === "true";
       const formattedIsBestSeller = isBestSeller === "true";
 
-      // Format number values
       const formattedPrice = price !== undefined ? Number(price) : undefined;
       const formattedDiscount =
         discount !== undefined ? Number(discount) : undefined;
@@ -175,7 +157,6 @@ export class ProductController {
         imageUrls = uploadedImages.map((img) => img.url).filter(Boolean);
       }
 
-      // Prepare update payload
       const updatedData: any = {
         ...(name && { name, slug: slugify(name) }),
         ...(sku && { sku }),
@@ -199,7 +180,8 @@ export class ProductController {
 
       const product = await this.productService.updateProduct(
         productId,
-        updatedData
+        updatedData,
+        vendorId as string | undefined
       );
 
       sendResponse(res, 200, {
@@ -208,12 +190,10 @@ export class ProductController {
       });
 
       const start = Date.now();
-      const end = Date.now();
-
       this.logsService.info("Product updated", {
         userId: req.user?.id,
         sessionId: req.session.id,
-        timePeriod: end - start,
+        timePeriod: Date.now() - start,
       });
     }
   );
@@ -221,16 +201,14 @@ export class ProductController {
   deleteProduct = asyncHandler(
     async (req: Request, res: Response): Promise<void> => {
       const { id: productId } = req.params;
-      console.log("productId: ", productId);
-      await this.productService.deleteProduct(productId);
+      const vendorId = undefined;
+      await this.productService.deleteProduct(productId, vendorId);
       sendResponse(res, 200, { message: "Product deleted successfully" });
       const start = Date.now();
-      const end = Date.now();
-
       this.logsService.info("Product deleted", {
         userId: req.user?.id,
         sessionId: req.session.id,
-        timePeriod: end - start,
+        timePeriod: Date.now() - start,
       });
     }
   );

@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Stepper from "./components/Stepper";
 import Step1Intro from "./components/Step1Intro";
 import Step2StoreDetails from "./components/Step2StoreDetails";
@@ -45,8 +45,7 @@ const VendorOnboarding = () => {
     }
   };
 
-  const handleFormChange = (data: any) => {
-    console.log("incoming data => ", data);
+  const handleFormChange = (data) => {
     setFormData((prev) => ({
       ...prev,
       ...data,
@@ -69,11 +68,12 @@ const VendorOnboarding = () => {
     formData.logoFiles.forEach((file) => {
       submissionData.append(`logoFiles`, file);
     });
+
     try {
       await applyForVendor(submissionData).unwrap();
       setCurrentStep(4);
       showToast("Application submitted successfully", "success");
-    } catch (err: any) {
+    } catch (err) {
       showToast("Failed to submit application", "error");
     }
   };
@@ -109,18 +109,20 @@ const VendorOnboarding = () => {
 
   return (
     <OnboardingLayout>
-      <div className="max-w-3xl mx-auto">
+      <div className="max-w-4xl mx-auto w-full px-4">
         <Stepper steps={steps} currentStep={currentStep} />
-        <motion.div
-          key={currentStep}
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -20 }}
-          transition={{ duration: 0.3 }}
-          className="mt-8"
-        >
-          {renderStep()}
-        </motion.div>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentStep}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.3 }}
+            className="mt-8"
+          >
+            {renderStep()}
+          </motion.div>
+        </AnimatePresence>
       </div>
     </OnboardingLayout>
   );

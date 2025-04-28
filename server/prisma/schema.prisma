@@ -78,25 +78,26 @@ model User {
 }
 
 model Vendor {
-  id            String          @id @default(uuid())
-  user          User            @relation("UserVendor", fields: [userId], references: [id], onDelete: Cascade)
-  userId        String          @unique
-  storeName     String          @unique
-  slug          String          @unique
-  description   String?
-  logoFiles          String[]
-  contact       String?
+  id              String          @id @default(uuid())
+  user            User            @relation("UserVendor", fields: [userId], references: [id], onDelete: Cascade)
+  userId          String          @unique
+  storeName       String          @unique
+  slug            String          @unique
+  description     String?
+  logoFiles       String[]
+  contact         String?
   businessDetails Json?
-  status        VENDOR_STATUS   @default(PENDING)
-  products      Product[]
-  orders        Order[]
-  payouts       Payout[]
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
-  StockMovement StockMovement[]
-  Restock       Restock[]
-  OrderItem     OrderItem[]
-  CartItem      CartItem[]
+  status          VENDOR_STATUS   @default(PENDING)
+  products        Product[]
+  orders          Order[]
+  payouts         Payout[]
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  StockMovement   StockMovement[]
+  Restock         Restock[]
+  OrderItem       OrderItem[]
+  CartItem        CartItem[]
+  Category        Category[]
 
   @@index([userId, storeName, slug])
 }
@@ -336,15 +337,15 @@ model CartEvent {
 }
 
 model Category {
-  id          String    @id @default(uuid())
-  slug        String    @unique
-  name        String
-  description String?
-  products    Product[]
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-
-  @@index([name, slug])
+  id        String    @id @default(uuid())
+  name      String
+  slug      String    @unique
+  images    String[]
+  vendorId  String?
+  vendor    Vendor?   @relation(fields: [vendorId], references: [userId])
+  products  Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
 
 model Interaction {

@@ -1,7 +1,7 @@
 "use client";
 import { useCreateInteractionMutation } from "@/app/store/apis/AnalyticsApi";
 import { useCallback, useRef } from "react";
-// import { useGetMeQuery } from "@/app/store/apis/UserApi";
+import { useAppSelector } from "../state/useRedux";
 
 interface TrackInteractionOptions {
   debounceMs?: number;
@@ -10,8 +10,7 @@ interface TrackInteractionOptions {
 const useTrackInteraction = ({
   debounceMs = 500,
 }: TrackInteractionOptions = {}) => {
-  // const { data } = useGetMeQuery(undefined);
-  const user = { id: "3423" };
+  const { user } = useAppSelector((state) => state.auth);
 
   const [createInteraction] = useCreateInteractionMutation();
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);

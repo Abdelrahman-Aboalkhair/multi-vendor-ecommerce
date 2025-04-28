@@ -10,7 +10,7 @@ const protect = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    const accessToken = req.cookies.accessToken;
+    const accessToken = req.headers.authorization?.split(" ")[1];
     console.log("accessToken: ", accessToken);
     if (!accessToken) {
       return next(new AppError(401, "Unauthorized, please log in"));
@@ -31,10 +31,6 @@ const protect = async (
     if (!user) {
       return next(new AppError(401, "User no longer exists."));
     }
-
-    // if (!user.emailVerified) {
-    //   return next(new AppError(403, "Please verify your email to continue."));
-    // }
 
     req.user = { id: decoded.id };
     next();

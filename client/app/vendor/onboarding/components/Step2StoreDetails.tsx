@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import ImageUploader from "@/app/components/molecules/ImageUploader";
-import { Mail } from "lucide-react";
+import { Mail, Store, FileText, FileCheck } from "lucide-react";
 import Input from "@/app/components/atoms/Input";
 import TextArea from "@/app/components/atoms/TextArea";
 
@@ -55,9 +55,8 @@ const Step2StoreDetails: React.FC<Step2StoreDetailsProps> = ({
   } = useForm({
     resolver: zodResolver(schema),
     defaultValues: formData,
+    mode: "onChange",
   });
-
-  console.log("formData => ", formData);
 
   const onSubmit = (data: any) => {
     onChange(data);
@@ -65,70 +64,92 @@ const Step2StoreDetails: React.FC<Step2StoreDetailsProps> = ({
   };
 
   return (
-    <div className="bg-white p-8 rounded-lg shadow-lg">
-      <h2 className="text-2xl font-bold text-gray-900 mb-4">Store Details</h2>
+    <div className="bg-white p-6 sm:p-8 rounded-xl shadow-lg border border-gray-100">
+      <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3">
+        Store Details
+      </h2>
       <p className="text-gray-600 mb-6">
-        Provide information about your store and verification documents to
-        create a unique presence on our platform.
+        Tell us about your business to create your vendor profile.
       </p>
+
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-        <Input
-          control={control}
-          name="storeName"
-          label="Store Name"
-          placeholder="My Awesome Store"
-          error={errors.storeName?.message}
-        />
-        <TextArea
-          control={control}
-          name="description"
-          label="Description"
-          placeholder="Describe your store..."
-          error={errors.description?.message}
-        />
-        <ImageUploader
-          control={control}
-          errors={errors}
-          watch={watch}
-          setValue={setValue}
-          label="Store Logo"
-          name="logoFiles"
-        />
-        <Input
-          control={control}
-          name="contact"
-          label="Contact Email"
-          placeholder="contact@yourstore.com"
-          icon={Mail}
-          error={errors.contact?.message}
-        />
-        <Input
-          control={control}
-          name="businessDetails.taxId"
-          label="Tax ID"
-          placeholder="Enter your tax ID"
-          error={errors.businessDetails?.taxId?.message}
-        />
-        <Input
-          control={control}
-          name="businessDetails.businessLicense"
-          label="Business License"
-          placeholder="Enter your business license number"
-          error={errors.businessDetails?.businessLicense?.message}
-        />
-        <div className="flex justify-between">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="md:col-span-2">
+            <Input
+              control={control}
+              name="storeName"
+              label="Store Name"
+              placeholder="Your Store Name"
+              icon={Store}
+              error={errors.storeName?.message}
+            />
+          </div>
+
+          <div className="md:col-span-2">
+            <TextArea
+              control={control}
+              name="description"
+              label="Store Description"
+              placeholder="Tell customers about your store and products..."
+              error={errors.description?.message}
+              rows={4}
+            />
+          </div>
+
+          <div className="md:col-span-2">
+            <ImageUploader
+              control={control}
+              errors={errors}
+              watch={watch}
+              setValue={setValue}
+              label="Store Logo"
+              name="logoFiles"
+            />
+          </div>
+
+          <Input
+            control={control}
+            name="contact"
+            label="Contact Email"
+            placeholder="contact@yourstore.com"
+            icon={Mail}
+            error={errors.contact?.message}
+          />
+
+          <Input
+            control={control}
+            name="businessDetails.taxId"
+            label="Tax ID / VAT Number"
+            placeholder="Enter your tax ID"
+            icon={FileText}
+            error={errors.businessDetails?.taxId?.message}
+          />
+
+          <div className="md:col-span-2">
+            <Input
+              control={control}
+              name="businessDetails.businessLicense"
+              label="Business License Number"
+              placeholder="Enter your business license number"
+              icon={FileCheck}
+              error={errors.businessDetails?.businessLicense?.message}
+            />
+          </div>
+        </div>
+
+        <div className="flex justify-between pt-4">
           <button
             type="button"
             onClick={onBack}
-            className="px-6 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-100 transition-colors"
+            className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors focus:ring-2 focus:ring-gray-200 focus:outline-none"
           >
             Back
           </button>
           <button
             type="submit"
-            className="bg-teal-500 text-white px-6 py-2 rounded-md hover:bg-teal-600 transition-colors"
+            className="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition-colors shadow-md hover:shadow-lg focus:ring-2 focus:ring-indigo-200 focus:outline-none"
           >
-            Next
+            Continue
           </button>
         </div>
       </form>
