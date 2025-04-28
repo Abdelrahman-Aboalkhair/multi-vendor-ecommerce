@@ -121,19 +121,19 @@ export const authApi = apiSlice.injectEndpoints({
       }),
     }),
 
-    checkAuth: builder.query<{ user: User; accessToken: string }, void>({
+    checkAuth: builder.mutation<{ user: User; accessToken: string }, void>({
       query: () => ({
         url: "/auth/refresh-token",
-        method: "POST", // Changed to POST
+        method: "POST",
       }),
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
-          console.log("data from check auth => ", data);
+          console.log("data from check auth =>", data);
           dispatch(setAccessToken(data.accessToken));
           dispatch(setUser(data.user));
         } catch (error) {
-          console.error("error checking auth => ", error);
+          console.error("error checking auth =>", error);
           dispatch(clearAuthState());
         }
       },
@@ -144,7 +144,7 @@ export const authApi = apiSlice.injectEndpoints({
 export const {
   useSignInMutation,
   useSignupMutation,
-  useCheckAuthQuery,
+  useCheckAuthMutation,
   useRefreshMutation,
   useSignOutMutation,
   useApplyForVendorMutation,

@@ -185,19 +185,31 @@ export class AuthController {
 
   refreshToken = asyncHandler(
     async (req: Request, res: Response): Promise<void> => {
-      const oldRefreshToken = req?.cookies?.refreshToken;
-      console.log("old refresh token => ", oldRefreshToken);
+      const start = Date.now(); // Start timing early
 
+      const oldRefreshToken = req?.cookies?.refreshToken;
       if (!oldRefreshToken) {
         throw new AppError(401, "Refresh token not found");
+      }
+
+      // Basic validation (optional but recommended)
+      if (typeof oldRefreshToken !== "string" || oldRefreshToken.length < 20) {
+        throw new AppError(400, "Invalid refresh token format");
       }
 
       const { newAccessToken, newRefreshToken, user } =
         await this.authService.refreshToken(oldRefreshToken);
 
-      res.cookie("refreshToken", newRefreshToken, cookieOptions);
+      // Set cookie with stricter security
+      res.cookie("refreshToken", newRefreshToken, {
+        ...cookieOptions,
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+      });
 
-      sendResponse(res, 200, {
+      // Prepare response
+      const responseData = {
         message: "Token refreshed successfully",
         data: {
           accessToken: newAccessToken,
@@ -208,13 +220,17 @@ export class AuthController {
             avatar: user.avatar,
           },
         },
-      });
-      const start = Date.now();
+      };
+
+      // Logging BEFORE sending response (non-blocking)
       this.logsService.info("Refresh Token", {
-        userId: req.user?.id,
-        sessionId: req.session.id,
-        timePeriod: Date.now() - start,
+        userId: user.id,
+        sessionId: req.session?.id,
+        durationMs: Date.now() - start,
       });
+
+      // Send response
+      sendResponse(res, 200, responseData);
     }
   );
 

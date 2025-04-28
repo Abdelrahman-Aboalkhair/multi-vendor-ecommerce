@@ -10,33 +10,48 @@ const cartService = new CartService(cartRepo);
 
 type OAuthProvider = "googleId" | "facebookId" | "twitterId";
 
+interface UserProfile {
+  id: string;
+  email: string;
+  name: string;
+  avatar?: string;
+}
+
+interface OAuthUser {
+  id: string;
+  email: string;
+  name: string;
+  avatar: string | null;
+  emailVerified: boolean;
+  [key: string]: any;
+}
+
 async function findOrCreateUser(
   providerIdField: OAuthProvider,
   providerId: string,
   email: string,
   name: string,
   avatar: string
-) {
+): Promise<OAuthUser> {
   let user = await prisma.user.findUnique({
     where: { email },
   });
 
   if (user) {
-    if (!user[providerIdField as keyof typeof user]) {
+    if (!user[providerIdField]) {
       user = await prisma.user.update({
         where: { email },
         data: {
-          [providerIdField as keyof typeof user]: providerId,
+          [providerIdField]: providerId,
           avatar,
           emailVerified: true,
         },
       });
     }
-
     return user;
   }
 
-  user = await prisma.user.create({
+  return prisma.user.create({
     data: {
       email,
       name,
@@ -45,8 +60,34 @@ async function findOrCreateUser(
       avatar,
     },
   });
+}
 
-  return user;
+function normalizeProfile(provider: OAuthProvider, profile: any): any {
+  switch (provider) {
+    case "googleId":
+      return {
+        id: profile.id,
+        email: profile.emails[0].value,
+        name: profile.displayName,
+        avatar: profile.photos[0]?.value || null,
+      };
+    case "facebookId":
+      return {
+        id: profile.id,
+        email: profile.emails[0]?.value || "",
+        name: `${profile.name?.givenName} ${profile.name?.familyName}`.trim(),
+        avatar: profile.photos?.[0]?.value || null,
+      };
+    case "twitterId":
+      return {
+        id: profile.id,
+        email: profile.emails?.[0]?.value || "",
+        name: profile.displayName || profile.username || "",
+        avatar: profile.photos?.[0]?.value || null,
+      };
+    default:
+      throw new Error(`Unsupported provider: ${provider}`);
+  }
 }
 
 export const oauthCallback = async (
@@ -57,51 +98,37 @@ export const oauthCallback = async (
   done: (error: any, user?: any) => void
 ) => {
   try {
-    let user;
-
-    if (providerIdField === "googleId") {
-      user = await findOrCreateUser(
-        providerIdField,
-        profile.id,
-        profile.emails[0].value,
-        profile.displayName,
-        profile.photos[0]?.value || ""
-      );
-    }
-
-    if (providerIdField === "facebookId") {
-      user = await findOrCreateUser(
-        providerIdField,
-        profile.id,
-        profile.emails[0]?.value || "",
-        `${profile.name?.givenName} ${profile.name?.familyName}`,
-        profile.photos?.[0]?.value || ""
-      );
-    }
-
-    if (providerIdField === "twitterId") {
-      user = await findOrCreateUser(
-        providerIdField,
-        profile.id,
-        profile.emails?.[0]?.value || "",
-        profile.displayName || profile.username || "",
-        profile.photos?.[0]?.value || ""
-      );
-    }
+    const { id, email, name, avatar } = normalizeProfile(
+      providerIdField,
+      profile
+    );
+    const user = await findOrCreateUser(
+      providerIdField,
+      id,
+      email,
+      name,
+      avatar
+    );
 
     if (!user) {
-      return done(null);
+      return done(new Error("Failed to create or find user"));
     }
 
-    const id = user.id;
-
-    const accessToken = generateAccessToken(id);
-    const refreshToken = generateRefreshToken(id);
+    const userId = user.id;
+    const newAccessToken = generateAccessToken(userId);
+    const newRefreshToken = generateRefreshToken(userId);
 
     return done(null, {
-      ...user,
-      accessToken,
-      refreshToken,
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        avatar: user.avatar,
+        role: user.role,
+        emailVerified: user.emailVerified,
+      },
+      accessToken: newAccessToken,
+      refreshToken: newRefreshToken,
     });
   } catch (error) {
     return done(error);
@@ -129,16 +156,15 @@ export const handleSocialLoginCallback = (provider: string) => {
       failureRedirect: "http://localhost:3000/sign-in",
     }),
     async (req: any, res: any) => {
-      const user = req.user as any;
-
-      const { accessToken, refreshToken } = user;
+      const { user, accessToken, refreshToken } = req.user;
 
       res.cookie("refreshToken", refreshToken, cookieOptions);
-      res.cookie("accessToken", accessToken, cookieOptions);
 
       const userId = user.id;
-      const sessionId = req.session.id;
-      await cartService?.mergeCartsOnLogin(sessionId, userId);
+      const sessionId = req.session?.id;
+      if (sessionId) {
+        await cartService?.mergeCartsOnLogin(sessionId, userId);
+      }
 
       res.redirect("http://localhost:3000");
     },

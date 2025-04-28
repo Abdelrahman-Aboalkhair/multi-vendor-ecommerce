@@ -47,8 +47,6 @@ const ProductSection: React.FC<ProductSectionProps> = ({
     };
   }, [data]);
 
-  console.log("data => ", data);
-
   const noProductsFound = displayedProducts.length === 0 && !loading && !error;
 
   const handleShowMore = () => {

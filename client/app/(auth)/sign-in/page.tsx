@@ -48,10 +48,9 @@ const SignIn = () => {
     }
   };
 
-  const handleOAuthLogin = (provider) => {
-    window.location.href = `http://localhost:5000/api/v1/auth/${provider}`;
+  const handleOAuthLogin = (provider: "google" | "facebook" | "twitter") => {
+    window.location.href = `http://localhost:5000/api/v1/auth/${provider}?callback=/auth/callback?provider=${provider}`;
   };
-
   return (
     <MainLayout>
       <div className="flex flex-row-reverse justify-between items-center w-full py-[3%] px-[10%]">

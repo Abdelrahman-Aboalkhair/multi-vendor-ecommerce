@@ -1442,3 +1442,44 @@ ConnectorError(ConnectorError { user_facing_error: None, kind: QueryError(Postgr
 [2025-04-27T21:53:45.759Z] [31MERROR[39M: Invalid access token, please log in
 [2025-04-27T21:55:09.780Z] [31MERROR[39M: No orders found for this user
 [2025-04-28T16:36:52.437Z] [31MERROR[39M: Email or password is incorrect.
+[2025-04-28T17:17:01.452Z] [31MERROR[39M: Refresh token not found
+[2025-04-28T17:17:01.530Z] [31MERROR[39M: Refresh token not found
+[2025-04-28T17:17:02.192Z] [31MERROR[39M: Refresh token not found
+[2025-04-28T17:17:02.239Z] [31MERROR[39M: Refresh token not found
+[2025-04-28T17:17:02.974Z] [31MERROR[39M: Refresh token not found
+[2025-04-28T17:17:03.104Z] [31MERROR[39M: Refresh token not found
+[2025-04-28T17:17:03.824Z] [31MERROR[39M: Refresh token not found
+[2025-04-28T17:17:03.890Z] [31MERROR[39M: Refresh token not found
+[2025-04-28T17:17:04.529Z] [31MERROR[39M: Refresh token not found
+[2025-04-28T17:17:04.554Z] [31MERROR[39M: Refresh token not found
+[2025-04-28T17:17:05.251Z] [31MERROR[39M: Refresh token not found
+[2025-04-28T17:17:05.282Z] [31MERROR[39M: Refresh token not found
+[2025-04-28T17:17:05.986Z] [31MERROR[39M: Refresh token not found
+[2025-04-28T17:17:06.008Z] [31MERROR[39M: Refresh token not found
+[2025-04-28T17:18:25.844Z] [31MERROR[39M: Email or password is incorrect.
+[2025-04-28T17:18:30.625Z] [31MERROR[39M: Refresh token not found
+[2025-04-28T17:18:30.748Z] [31MERROR[39M: Refresh token not found
+[2025-04-28T17:18:31.364Z] [31MERROR[39M: Refresh token not found
+[2025-04-28T17:18:31.421Z] [31MERROR[39M: Refresh token not found
+[2025-04-28T17:18:32.082Z] [31MERROR[39M: Refresh token not found
+[2025-04-28T17:18:32.105Z] [31MERROR[39M: Refresh token not found
+[2025-04-28T17:18:32.738Z] [31MERROR[39M: Refresh token not found
+[2025-04-28T17:18:32.808Z] [31MERROR[39M: Refresh token not found
+[2025-04-28T17:18:33.469Z] [31MERROR[39M: Refresh token not found
+[2025-04-28T17:18:33.510Z] [31MERROR[39M: Refresh token not found
+[2025-04-28T17:20:31.348Z] [31MERROR[39M: Refresh token not found
+[2025-04-28T17:20:31.420Z] [31MERROR[39M: Refresh token not found
+[2025-04-28T17:20:36.415Z] [31MERROR[39M: Email or password is incorrect.
+[2025-04-28T17:20:43.641Z] [31MERROR[39M: Refresh token not found
+[2025-04-28T17:21:20.071Z] [31MERROR[39M: Refresh token not found
+[2025-04-28T17:21:35.223Z] [31MERROR[39M: Refresh token not found
+[2025-04-28T17:28:08.309Z] [31MERROR[39M: Refresh token not found
+[2025-04-28T17:28:25.490Z] [31MERROR[39M: Refresh token not found
+[2025-04-28T17:28:55.546Z] [31MERROR[39M: Refresh token not found
+[2025-04-28T17:29:01.970Z] [31MERROR[39M: Refresh token not found
+[2025-04-28T17:29:51.978Z] [31MERROR[39M: Refresh token not found
+[2025-04-28T17:29:56.238Z] [31MERROR[39M: Refresh token not found
+[2025-04-28T22:30:49.771Z] [31MERROR[39M: User not found
+[2025-04-28T22:31:18.015Z] [31MERROR[39M: User not found
+[2025-04-28T22:31:23.875Z] [31MERROR[39M: User not found
+[2025-04-28T22:31:25.845Z] [31MERROR[39M: User not found

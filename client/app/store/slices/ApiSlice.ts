@@ -1,8 +1,14 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { clearAccessToken, setAccessToken } from "./AuthSlice";
+import { clearAuthState, setAccessToken, setUser } from "./AuthSlice";
 
 interface RefreshTokenResponse {
   accessToken: string;
+  user: {
+    id: string;
+    email: string;
+    role: string;
+    avatar: string | null;
+  };
 }
 
 const baseQuery = fetchBaseQuery({
@@ -17,11 +23,24 @@ const baseQuery = fetchBaseQuery({
   },
 });
 
+const authRoutes = ["/sign-in", "/sign-up", "/password-reset", "/verify-email"];
+
 const baseQueryWithReauth = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions);
 
   if (result.error && result.error.status === 401) {
-    // Try to refresh the token
+    const pathname =
+      typeof window !== "undefined" ? window.location.pathname : "";
+
+    const isOnAuthPage = authRoutes.includes(pathname);
+
+    if (isOnAuthPage) {
+      // No retry if on auth page
+      api.dispatch(clearAuthState());
+      return result; // Simply return the 401 error
+    }
+
+    // Otherwise, try to refresh
     const refreshResult = await baseQuery(
       { url: "/auth/refresh-token", method: "POST" },
       api,
@@ -30,13 +49,13 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 
     if (refreshResult.data) {
       const data: RefreshTokenResponse = refreshResult.data;
-      // Update access token
       api.dispatch(setAccessToken(data.accessToken));
+      api.dispatch(setUser(data.user));
       // Retry the original request
       result = await baseQuery(args, api, extraOptions);
     } else {
-      // Refresh failed, clear token and redirect to login
-      api.dispatch(clearAccessToken());
+      // Refresh failed
+      api.dispatch(clearAuthState());
       window.location.href = "/sign-in";
     }
   }

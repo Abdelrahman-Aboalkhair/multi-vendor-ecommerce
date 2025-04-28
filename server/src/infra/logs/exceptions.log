@@ -1,13 +1,9 @@
-[2025-04-27T22:05:26.819Z] [31MERROR[39M: uncaughtException: EIO: i/o error, write
-Error: EIO: i/o error, write
-    at writeSync (node:fs:925:3)
-    at SyncWriteStream._write (node:internal/fs/sync_write_stream:27:5)
-    at writeOrBuffer (node:internal/streams/writable:570:12)
-    at _write (node:internal/streams/writable:499:10)
-    at SyncWriteStream.Writable.write (node:internal/streams/writable:508:10)
-    at console.value (node:internal/console/constructor:298:16)
-    at console.log (node:internal/console/constructor:384:26)
-    at EventEmitter.<anonymous> (/home/abdelrahman-aboalkhair/Projects/WEB/multi-vendor-ecommerce/server/src/infra/cache/redis.ts:50:32)
-    at EventEmitter.emit (node:events:507:28)
-    at EventEmitter.emit (node:domain:489:12)
-    at processTicksAndRejections (node:internal/process/task_queues:85:11)
+[2025-04-28T17:03:32.728Z] [31MERROR[39M: uncaughtException: Cannot set headers after they are sent to the client
+Error: Cannot set headers after they are sent to the client
+    at ServerResponse.setHeader (node:_http_outgoing:699:11)
+    at ServerResponse.header (/home/abdelrahman-aboalkhair/Projects/WEB/multi-vendor-ecommerce/server/node_modules/express/lib/response.js:794:10)
+    at ServerResponse.send (/home/abdelrahman-aboalkhair/Projects/WEB/multi-vendor-ecommerce/server/node_modules/express/lib/response.js:174:12)
+    at ServerResponse.json (/home/abdelrahman-aboalkhair/Projects/WEB/multi-vendor-ecommerce/server/node_modules/express/lib/response.js:278:15)
+    at /home/abdelrahman-aboalkhair/Projects/WEB/multi-vendor-ecommerce/server/src/shared/utils/auth/oauthUtils.ts:171:11
+    at Generator.next (<anonymous>)
+    at fulfilled (/home/abdelrahman-aboalkhair/Projects/WEB/multi-vendor-ecommerce/server/src/shared/utils/auth/oauthUtils.ts:5:58)
